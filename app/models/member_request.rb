@@ -1,0 +1,2 @@
+class MemberRequest < ApplicationRecord
+end

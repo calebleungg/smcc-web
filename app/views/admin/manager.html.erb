@@ -1,0 +1,84 @@
+<div class="admin-container">
+	<% if current_user.admin %>
+		<h3 class="page-details-title"> Home Page Info-Sections </h3>
+
+		<div class="page-info-wrapper">
+			<div class="page-section">
+				<% if params[:edit] == "about" %>
+					<%= form_with model: @section, url: update_section_path, method: :patch do |form| %>
+						<%= tinymce %>
+						<%= form.hidden_field :id, value: @section1.id %> 
+						<h5> <%= form.text_field :title, value: @section1.title %> </h5>
+						<p> <%= form.text_area :content, value: @section1.content.html_safe, :class => "tinymce", :rows => 10 %><p>
+						<%= form.submit "Save", class: "btn btn-success" %>
+					<% end %>
+				<% else %>
+					<h5> <%= @section1.title%> | <%= link_to "Edit", admin_path(:edit => "about") %> </h5> 
+					<%= @section1.content.html_safe%>
+				<% end %>
+			</div>
+
+			<div class="page-section">
+				<% if params[:edit] == "purpose" %>
+					<%= form_with model: @section, url: update_section_path, method: :patch do |form| %>
+						<%= tinymce %>
+						<%= form.hidden_field :id, value: @section2.id %> 
+						<h5> <%= form.text_field :title, value: @section2.title %> </h5>
+						<p> <%= form.text_area :content, value: @section2.content.html_safe, :class => "tinymce" , :rows => 20, :cols => 120 %><p>
+						<%= form.submit "Save", class: "btn btn-success" %>
+					<% end %>
+				<% else%>
+					<h5> <%= @section2.title %> | <%= link_to "Edit", admin_path(:edit => "purpose") %></h5>
+					<p> <%= @section2.content.html_safe  %> </p>
+				<% end %>
+			</div>
+		</div>
+		<div class="album-title-section">
+			<h3> Albums </h3>
+			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+			Create Album
+			</button>
+		</div>
+		<div class="album-list">
+			<% for album in @albums %>
+				<%= link_to album_path(album.id) do %>
+					<div class="card">
+						<%= image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg" , class:"card-img-top"%>
+						<div class="card-body">
+							<p class="card-text"><strong><%= album.title%></strong></p>
+							<p class="card-text"><%= album.description%></p>
+						</div>
+					</div>
+				<% end %>
+			<% end %>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">New Album</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="add-album-form">
+				<%= form_with model:@album, url: create_album_path, method: :post do |form|%>
+					<%= form.label :title, "Title"%><br/>
+					<%= form.text_field :title, placeholder: "Enter album title"%><br/><br/>
+					<%= form.label :description, "Description"%><br/>
+					<%= form.text_area :description, placeholder: "Enter Description"%><br/>
+					<%= form.submit "Create", class:"save-btn" %>
+				<% end %>
+			</div>
+			</div>
+		</div>
+		</div>
+	<% else %>
+		<div class="error-access-denied">
+			<p id="error-title"> Error: Access Denied </p>
+			<p id="error-message"> Sorry you have no access to this area </p>
+		</div>
+	<% end %>
+</div>

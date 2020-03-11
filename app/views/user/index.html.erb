@@ -1,0 +1,37 @@
+<div class="title-graphic">
+    <%= image_tag "school-logo.jpg", id:"school-logo-img" %> <h1> SMCC CLASS 76</h1>
+    <%= image_tag "banner.JPG", id:"banner-img"%>
+</div>
+
+<div class="welcome-wrapper">
+    <div class="welcome-about">
+        <h3> <%= @history.title %> </h3>
+        <p> <%= @history.content.html_safe %></p>
+    </div>
+    <%= image_tag "index-img-1.jpg"%>
+</div>
+
+<div class="purpose-wrapper">
+    <%= image_tag "index-img-2.jpg"%>
+    <div class="purpose-about">
+        <h3> <%= @purpose.title %> </h3>
+        <p> <%= @purpose.content.html_safe %> </p>
+    </div>
+</div>
+
+<div class="index-album-wrapper">
+    <% for album in @albums %>
+        <%= link_to album_path(album.id) do %>
+            <div class="index-album-box">
+                <h3> <%= album.title %> </h3>
+                <%= image_tag album.photos[0].image, id:"cover-img"%>
+                <div class="small-img-footer"> 
+                    <%= image_tag album.photos[1].image %>
+                    <%= image_tag album.photos[2].image %> 
+                    <%= image_tag album.photos[3].image %> 
+                    <%= image_tag album.photos[4].image %> 
+                </div>
+            </div>
+        <% end %>
+    <% end %>
+</div>

@@ -1,0 +1,263 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+ @import "bootstrap";
+
+ 
+ .navbar {
+     height: 6vh;
+ }
+ #navbarSupportedContent {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#main-nav {
+    li:nth-child(2) {
+        padding-right: 50px;
+    }
+}
+ .container {
+     padding-bottom: 80px;
+ }
+ .navbar-brand {
+     img {
+         width: auto;
+         height: 6vh;
+     }
+ }
+ #admin-btn {
+     background-color: white;
+     font-weight: 600;
+     color: black
+ }
+
+#banner-img {
+    width: 100%;
+    height: auto;
+    padding-top: 50px;
+}
+#school-logo-img {
+    width: 200px;
+    height: 200px;
+    border-right: 10px solid white;
+    border-bottom: 10px solid white;
+    position: absolute;
+}
+.title-graphic {
+    background-color: #f0f0f0;
+    h1 {
+        position: relative;
+        top: 30px;
+        left: 440px;
+        font-weight: 700;
+        width: 500px;
+    }
+}
+.welcome-about {
+    width: 60%;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+
+.purpose-about {
+    width: 60%;
+    padding: 20px;
+    background-color: #f0f0f0;
+}
+.purpose-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 50px;
+    img {
+        height: auto;
+        width:40%;
+    }
+    box-shadow: 0 0 5px grey;
+}
+.welcome-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 50px;
+    box-shadow: 0 0 5px grey;
+    img {
+        height: auto;
+        width:40%;
+    }
+}
+#add-album-form {
+   input, textarea {
+       border-radius: 5px;
+       padding: 5px;
+       border: 1px solid lightgrey;
+       width: 200px;
+   }
+   textarea {
+       width: 400px;
+       height: 100px;
+   }
+   .save-btn {
+       width: 80px;
+   }
+
+  
+}
+.save-btn {
+    width: 80px;
+    font-weight: 600;
+    background-color: green;
+    border: none;
+    color: white;
+    &:hover {
+        background-color: #026402;
+    }
+}
+
+.album-list {
+    display: flex;
+    flex-wrap: wrap;
+    .card {
+        width: 300px;
+        margin-right: 20px;
+    }
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    .card-img-top {
+        height: 300px;
+    }
+    
+}
+.album-view-general {
+    h1 {
+        margin-top: 30px;
+    }
+    .photo-grid {
+        display: flex;
+        flex-wrap: wrap;
+        img {
+            width: 272px;
+            height: 272px;
+        }
+    }
+    #large-view-photo {
+        width: auto;
+        height: 95vh;
+    }
+
+}
+
+#add-photo-form {
+    img {
+        margin-bottom: 20px;
+    }
+    input {
+        border-radius: 5px;
+        padding: 5px;
+        border: 1px solid lightgrey;
+        width: 300px;
+    }
+    #img_prev {
+        width: 400px;
+        height: auto;
+    }
+    .save-btn {
+        width: 80px;
+    }
+}
+.index-album-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 50px 0;
+    a {
+        color: black;
+        text-decoration: none;
+    }
+}
+.index-album-box {
+    padding: 20px;
+    h3 {
+        text-align: center;
+    }
+    &:hover {
+        // box-shadow: 0 0 5px grey;
+        background-color: #f0f0f0;
+    }
+
+    #cover-img {
+        width: 500px;
+        height: 380px;
+    }
+    .small-img-footer {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+        img {
+            width: 120px;
+            height: 120px;
+        }
+    }
+}
+.error-access-denied {
+    margin: 30%;
+    #error-title {
+        border-radius: 20px 20px 0 0;
+        background-color: #f3deb1;
+        font-weight: 700;
+        font-size: 2em;
+        color: #b63434;
+        text-align: center;
+    }
+    border: 1px solid lightgrey;
+    border-radius: 20px;
+    #error-message {
+        font-weight: 600;
+        font-size: 1.2em;
+        text-align: center;
+    }
+}
+.admin-container {
+    h3 {
+        padding: 10px;
+        background-color: #f0f0f0;
+        font-weight: 600;
+        max-width: 360px;
+    }
+    .page-details-title {
+        margin-top: 80px;
+        margin-bottom: 20px;
+    }
+    .page-section {
+        input {
+            padding: 5px;
+        }
+    }
+    
+    .album-title-section {
+        display: flex;
+        flex-direction: row;
+        .btn {
+            margin-left: 20px;
+            width: 120px;
+            height: 40px;
+            margin-top: 8px;
+        }
+        margin-bottom: 20px;
+        margin-top: 50px;
+    }
+}
