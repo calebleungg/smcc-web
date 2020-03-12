@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   patch "/album/:id/update/public", to: "album#update_public", as: "update_public"
   patch "/album/:id/update/private", to: "album#update_private", as: "update_private"
 
+  get "/member-request/new", to: "request#new", as: "new_request"
+  get "/member-request/confirmation", to: "request#confirm", as: "confirm_request"
+  post "/member-request/create", to: "request#create", as: "create_request"
+  post "/member-request/approve", to: "admin#approve", as: "approve_request"
+  delete "/member-request/decline/:id", to: "admin#decline", as: "decline_request"
+
 end
