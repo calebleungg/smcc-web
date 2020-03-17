@@ -14,6 +14,8 @@
 
  @import "bootstrap";
 
+ $main-color: #333333;
+
  
  .navbar {
      height: 6vh;
@@ -28,8 +30,8 @@
         padding-right: 50px;
     }
 }
- .container {
-     padding-bottom: 80px;
+ .container-fluid {
+     padding: 10px;
  }
  .navbar-brand {
      img {
@@ -43,61 +45,162 @@
      color: black
  }
 
-#banner-img {
-    width: 100%;
-    height: auto;
-    padding-top: 50px;
-}
-#school-logo-img {
-    width: 200px;
-    height: 200px;
-    border-right: 10px solid white;
-    border-bottom: 10px solid white;
-    position: absolute;
-}
-.title-graphic {
-    background-color: #f0f0f0;
-    h1 {
-        position: relative;
-        top: 30px;
-        left: 440px;
-        font-weight: 700;
-        width: 500px;
+ #banner-img {
+     width: 47vw;
+     height: auto;
+ }
+
+ .index-wrapper {
+    display: flex;
+    flex-direction: row;
+ }
+
+ .left-content {
+     display: flex;
+     flex-direction: column;
+     align-items: flex-end;
+     a {
+        text-decoration: none;
     }
-}
-.welcome-about {
-    width: 60%;
-    padding: 20px;
-    background-color: #f0f0f0;
+ }
+
+ .title-graphic {
+     background-color: $main-color;
+     padding: 10px;
+ }
+ 
+ .index-member-button {
+     height: 41vh;
+     width: 20vw;
+     background-color: $main-color;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     transition: 0.3s;
+     p {
+         font-size: 2.3em;
+         color: white;
+         font-weight: 600;
+         text-align: center;
+    }
+
+     &:hover {
+         animation: fade-background 0.3s forwards;
+         animation: expand 0.3s forwards;
+     }
+ }
+
+ .content-wrapper {
+     background-color: $main-color;
+     color: white;
+     h3 {
+         font-weight: 600;
+     }
+     font-size: 70%;
+     padding: 30px 20px 20px 20px;
+     width: 15vw;
+     height: auto;
+     margin: 0 10px;
+ }
+
+ @keyframes fade-background {
+     from {
+         background-color: $main-color;
+     }
+     to {
+         background-color: grey;
+     }
+ }
+ 
+ @keyframes expand {
+     from {
+        width: 20vw;
+    }
+     to {
+        width: 30vw;
+    }
+ }
+ @keyframes fade-left-span {
+    from {
+        margin-right: 0;
+    }
+    to {
+        margin-right: 11vw;
+    }
 }
 
-.purpose-about {
-    width: 60%;
-    padding: 20px;
-    background-color: #f0f0f0;
+ @keyframes fade-left {
+     from {
+         margin-right: 0;
+     }
+     to {
+         margin-right: 10vw;
+     }
+ }
+
+ .right-content {
+     max-height: 93vh;
+     overflow: scroll;
+     .right-top, .right-bottom, .right-extra {
+         display: flex;
+         flex-direction: row;
+     }
+     .album-wrapper {
+         width: 33vw;
+         img {
+            height: 45vh;
+         }
+     }
+     .right-bottom {
+         padding-left: 10px;
+         padding-top: 10px;
+     }
+ }
+
+@media screen and (min-width: 1500px) {
+    .content-wrapper {
+        font-size: 90%;
+    }
 }
-.purpose-wrapper {
-    width: 100%;
+
+.left-bottom {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: flex-end;
-    margin-top: 50px;
-    img {
-        height: auto;
-        width:40%;
+     margin-top: 10px;
+     h1 {
+        font-size: 1.5em;
+        padding-right: 30px;
+        text-align: center;
+        font-weight: 700;
     }
-    box-shadow: 0 0 5px grey;
+    img {
+        width: 200px;
+        height: auto;
+    }
+    background-color: #E0E0E0;
+    width: 48vw;
 }
-.welcome-wrapper {
-    width: 100%;
+.right-extra {
+    margin-top: 10px;
     display: flex;
-    justify-content: flex-start;
-    margin-top: 50px;
-    box-shadow: 0 0 5px grey;
-    img {
-        height: auto;
-        width:40%;
+    justify-content: center;
+    .album-wrapper {
+        width: 48vw;
+        img {
+            height: auto;
+        }
+    }
+    text-align: center;
+    background-color: $main-color;
+    color: white;
+    h3 {
+        padding: 10px 0;
     }
 }
+
 #add-album-form {
    input, textarea {
        border-radius: 5px;
@@ -252,6 +355,7 @@
                 }
             }
             td {
+                font-size: 0.9em;
                 padding: 5px;
                 padding-right: 20px;
             }

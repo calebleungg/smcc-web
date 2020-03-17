@@ -1,37 +1,127 @@
-<div class="title-graphic">
-    <%= image_tag "school-logo.jpg", id:"school-logo-img" %> <h1> SMCC CLASS 76</h1>
-    <%= image_tag "banner.JPG", id:"banner-img"%>
-</div>
+<div class="index-wrapper">
 
-<div class="welcome-wrapper">
-    <div class="welcome-about">
-        <h3> <%= @history.title %> </h3>
-        <p> <%= @history.content.html_safe %></p>
+    <div class="left-content">
+        <div class="title-graphic">
+            <%= image_tag "banner.JPG", id:"banner-img"%>
+        </div>
+        <div class="left-bottom">
+            <div>
+                <%= image_tag "school-logo.jpg"%>
+                <h1> SMCC CLASS 76</h1>
+            </div>
+            <%= link_to new_request_path do%>
+                <div class="index-member-button">
+                    <p> Become a</p>
+                    <p> member</p>
+                </div>
+            <% end %>
+        </div>
+
     </div>
-    <%= image_tag "index-img-1.jpg"%>
-</div>
 
-<div class="purpose-wrapper">
-    <%= image_tag "index-img-2.jpg"%>
-    <div class="purpose-about">
-        <h3> <%= @purpose.title %> </h3>
-        <p> <%= @purpose.content.html_safe %> </p>
-    </div>
-</div>
+    <div class="right-content">
 
-<div class="index-album-wrapper">
-    <% for album in @albums %>
-        <%= link_to album_path(album.id) do %>
-            <div class="index-album-box">
-                <h3> <%= album.title %> </h3>
-                <%= image_tag album.photos[0].image, id:"cover-img"%>
-                <div class="small-img-footer"> 
-                    <%= image_tag album.photos[1].image %>
-                    <%= image_tag album.photos[2].image %> 
-                    <%= image_tag album.photos[3].image %> 
-                    <%= image_tag album.photos[4].image %> 
+        <div class="right-top">
+
+            <div class="content-wrapper" >
+                <div class="welcome-about">
+                    <h3> <%= @history.title %> </h3>
+                    <p> <%= @history.content.html_safe %></p>
                 </div>
             </div>
-        <% end %>
-    <% end %>
+
+            <div class="album-wrapper">
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <%= link_to album_path(@albums[0].id) do %>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <%= image_tag @albums[0].photos[-1].image, class:"d-block w-100"%>
+                            </div>
+                            <% for photo in @albums[0].photos%>
+                                <div class="carousel-item">
+                                    <%= image_tag photo.image, class:"d-block w-100"%>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="right-bottom">
+
+            <div class="album-wrapper">
+
+                <div id="carosel-2" class="carousel slide" data-ride="carousel">
+                    <%= link_to album_path(@albums[1].id) do %>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <%= image_tag @albums[1].photos[-1].image, class:"d-block w-100"%>
+                            </div>
+                            <% for photo in @albums[1].photos%>
+                                <div class="carousel-item">
+                                    <%= image_tag photo.image, class:"d-block w-100"%>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                    <a class="carousel-control-prev" href="#carosel-2" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carosel-2" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="purpose-about">
+                    <h3> <%= @purpose.title %> </h3>
+                    <p> <%= @purpose.content.html_safe %> </p>
+                </div>
+            </div>  
+        </div>
+
+        <div class="right-extra">
+
+            <div class="album-wrapper">
+                <h3><%=@albums[2].title%></h3>
+                <div id="carosel-3" class="carousel slide" data-ride="carousel">
+                    <%= link_to album_path(@albums[2].id) do %>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <%= image_tag @albums[2].photos[-1].image, class:"d-block w-100"%>
+                            </div>
+                            <% for photo in @albums[2].photos%>
+                                <div class="carousel-item">
+                                    <%= image_tag photo.image, class:"d-block w-100"%>
+                                </div>
+                            <% end %>
+                        </div>
+                    <% end %>
+                    <a class="carousel-control-prev" href="#carosel-3" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carosel-3" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
 </div>
