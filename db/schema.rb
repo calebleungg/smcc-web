@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_11_111940) do
+ActiveRecord::Schema.define(version: 2020_03_21_002753) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 2020_03_11_111940) do
     t.string "first_name"
     t.string "last_name"
     t.string "email"
-    t.date "year_graduated"
-    t.decimal "phone"
+    t.string "year_graduated"
+    t.string "phone"
     t.string "address"
     t.string "country"
     t.string "password_pref"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 2020_03_11_111940) do
     t.bigint "album_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["album_id"], name: "index_photos_on_album_id"
   end
 

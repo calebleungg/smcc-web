@@ -13,6 +13,8 @@ gem 'puma', '~> 3.11'
 gem 'bootstrap', '~> 4.4.1'
 # jquery
 gem 'jquery-rails'
+# acts as gem
+gem 'acts_as_list'
 # tinymce
 gem 'tinymce-rails'
 # Use SCSS for stylesheets

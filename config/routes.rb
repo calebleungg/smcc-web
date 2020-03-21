@@ -21,4 +21,8 @@ Rails.application.routes.draw do
   post "/member-request/approve", to: "admin#approve", as: "approve_request"
   delete "/member-request/decline/:id", to: "admin#decline", as: "decline_request"
 
+  patch "/photo/:id/move-up", to: "photo#move_up", as: "move_up"
+  patch "/photo/:id/move-down", to: "photo#move_down", as: "move_down"
+
+
 end

@@ -2,23 +2,39 @@
     <h1> 
         <%= @album.title %> 
         <%  if user_signed_in? && current_user.admin %>
-            <%= link_to "Add Photo", root_path, class:"btn btn-success", "data-toggle" => "modal", "data-target" => "#addPhotoModal" %> 
-            <%= link_to "Manage", root_path, class:"btn btn-info" %>
+            <%= link_to "Add Photo", root_path, "data-toggle" => "modal", "data-target" => "#addPhotoModal" %> 
+            <% if params[:manage] %>
+                <%= link_to "Finish", album_path(@album.id) %>
+            <% else %>
+                <%= link_to "Manage", album_path(@album.id, :manage => true) %>
+            <% end %>
         <% end %> 
     </h1>
     <p> 
         <%= @album.description %> 
     </p>
-    <% if @album.public %>
-        <%= link_to "Public", update_private_path(@album.id), method: :patch, class:"btn btn-success" %>
-    <% else%>
-        <%= link_to "Private", update_public_path(@album.id), method: :patch, class:"btn btn-danger" %>
+    <%  if user_signed_in? && current_user.admin %>
+        <% if @album.public %>
+            <%= link_to "Public", update_private_path(@album.id), method: :patch, class:"btn btn-success" %>
+        <% else%>
+            <%= link_to "Private", update_public_path(@album.id), method: :patch, class:"btn btn-danger" %>
+        <% end %>
     <% end %>
     <hr>
 
     <div class="photo-grid">
         <% for photo in @photos %>
-            <%= image_tag photo.image, type:"button", "data-toggle" => "modal", "data-target" => "#viewPhotoModal#{photo.id}" %>
+            <div>
+                <%= image_tag photo.image, type:"button", "data-toggle" => "modal", "data-target" => "#viewPhotoModal#{photo.id}" %>
+                <% if params[:manage] %>
+                    <div class="manage-panel"> 
+                        <%= link_to "<", move_up_path(:photo => photo), method: :patch %>
+                        <%= link_to "Edit", root_path %>
+                        <%= link_to "Delete", root_path %>
+                        <%= link_to ">", move_down_path(:photo => photo), method: :patch %>
+                    </div>
+                <% end %>
+            </div>
             <!-- View Photo Modal -->
             <div class="modal fade" id="viewPhotoModal<%=photo.id%>" tabindex="-1" role="dialog" aria-labelledby="viewPhotoModal<%=photo.id%>Label" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
