@@ -13,7 +13,7 @@ class PhotoController < ApplicationController
     end
 
     def move_up
-        photo = Photo.find(params[:photo])
+        photo = Photo.find(params[:id])
         album = Album.find(photo.album_id)
         replace = album.photos.where(position: photo.position - 1).first
         replace.position = photo.position
@@ -24,7 +24,7 @@ class PhotoController < ApplicationController
     end
 
     def move_down
-        photo = Photo.find(params[:photo])
+        photo = Photo.find(params[:id])
         album = Album.find(photo.album_id)
         replace = album.photos.where(position: photo.position + 1).first
         replace.position = photo.position

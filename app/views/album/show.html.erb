@@ -28,10 +28,10 @@
                 <%= image_tag photo.image, type:"button", "data-toggle" => "modal", "data-target" => "#viewPhotoModal#{photo.id}" %>
                 <% if params[:manage] %>
                     <div class="manage-panel"> 
-                        <%= link_to "<", move_up_path(:photo => photo), method: :patch %>
+                        <%= link_to "<", move_up_path(photo.id), method: :patch %>
                         <%= link_to "Edit", root_path %>
                         <%= link_to "Delete", root_path %>
-                        <%= link_to ">", move_down_path(:photo => photo), method: :patch %>
+                        <%= link_to ">", move_down_path(photo.id), method: :patch %>
                     </div>
                 <% end %>
             </div>
