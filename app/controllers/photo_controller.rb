@@ -33,5 +33,15 @@ class PhotoController < ApplicationController
             redirect_back(fallback_location: album_path(album))
         end
     end
+
+    def delete
+        if current_user.admin
+            photo = Photo.find(params[:id])
+            photo.destroy
+            redirect_back(fallback_location: album_path(photo.album_id))
+        else
+            redirect_to root_path
+        end
+    end
     
 end

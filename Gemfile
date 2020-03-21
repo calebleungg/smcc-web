@@ -13,6 +13,8 @@ gem 'puma', '~> 3.11'
 gem 'bootstrap', '~> 4.4.1'
 # jquery
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'rails_sortable'
 # acts as gem
 gem 'acts_as_list'
 # tinymce

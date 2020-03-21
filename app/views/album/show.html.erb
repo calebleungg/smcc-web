@@ -29,8 +29,7 @@
                 <% if params[:manage] %>
                     <div class="manage-panel"> 
                         <%= link_to "<", move_up_path(photo.id), method: :patch %>
-                        <%= link_to "Edit", root_path %>
-                        <%= link_to "Delete", root_path %>
+                        <%= link_to "Delete", delete_photo_path(photo.id), method: :delete %>
                         <%= link_to ">", move_down_path(photo.id), method: :patch %>
                     </div>
                 <% end %>

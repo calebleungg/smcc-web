@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   patch "/photo/:id/move-up", to: "photo#move_up", as: "move_up"
   patch "/photo/:id/move-down", to: "photo#move_down", as: "move_down"
+  delete "/photo/:id/delete", to: "photo#delete", as:"delete_photo"
 
 
 end
