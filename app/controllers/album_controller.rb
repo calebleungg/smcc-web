@@ -3,6 +3,8 @@ class AlbumController < ApplicationController
     def show
         @album = Album.find(params[:id])
         @photos = @album.photos.order("position")
+        
+        render layout: "album"
     end
 
     def create
