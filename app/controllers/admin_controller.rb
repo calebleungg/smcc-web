@@ -15,6 +15,9 @@ class AdminController < ApplicationController
             first_name: params[:first_name],
             last_name: params[:last_name],
             email: params[:email],
+            year_grad: params[:year_grad],
+            phone: params[:phone],
+            address: params[:address],
             password: params[:password]
         )
         redirect_back(fallback_location: admin_path)

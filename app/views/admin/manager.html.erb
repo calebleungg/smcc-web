@@ -11,7 +11,6 @@
 					<td> Year grad </td>
 					<td> Phone </td>
 					<td> Address </td>
-					<td> Country </td>
 					<td> Password pref </td>
 					<td> </td>
 				</tr>
@@ -24,7 +23,6 @@
 							<td> <%= request.year_graduated %> </td>
 							<td> <%= number_to_phone request.phone.to_i %> </td>
 							<td> <%= request.address %> </td>
-							<td> <%= request.country %> </td>
 							<td> <%= request.password_pref %> </td>
 							<td> 
 								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal<%=request.id%>">
@@ -52,6 +50,12 @@
 										<%= form.text_field :last_name, value: request.last_name%><br/>
 										<%= form.label :email, "Email" %>
 										<%= form.text_field :email, value: request.email%><br/>
+										<%= form.label :year_grad, "Year Graduated" %>
+										<%= form.text_field :year_grad, value: request.year_graduated%><br/>
+										<%= form.label :phone, "Phone" %>
+										<%= form.text_field :phone, value: request.phone%><br/>
+										<%= form.label :address, "Address" %>
+										<%= form.text_field :address, value: request.address%><br/>
 										<%= form.label :password, "Enter preferred password" %>
 										<%= form.password_field :password %><br/>
 										<%= form.submit "approve"%>
