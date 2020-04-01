@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    </head>
+
+    <body>
+        <h1>A new member request has been made.</h1>
+        
+        <table>
+            <tr>
+                <td> First Name </td>
+                <td> <%= @request.first_name %> </td>
+            </tr>
+            <tr>
+                <td> Last Name </td>
+                <td> <%= @request.last_name %> </td>
+            </tr>
+            <tr>
+                <td> Email </td>
+                <td> <%= @request.email %> </td>
+            </tr>
+            <tr>
+                <td> Phone </td>
+                <td> <%= @request.phone %> </td>
+            </tr>
+            <tr>
+                <td> Year Graduated </td>
+                <td> <%= @request.year_graduated %> </td>
+            </tr>
+            <tr>
+                <td> Address </td>
+                <td> <%= @request.address %> </td>
+            </tr>
+        </table>
+        <br>
+    </body>
+
+</html>

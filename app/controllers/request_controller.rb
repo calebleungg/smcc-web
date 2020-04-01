@@ -8,6 +8,7 @@ class RequestController < ApplicationController
         @member_request = MemberRequest.create(request_params)
         @member_request.approved = false
         if @member_request.valid? && @member_request.save
+            UserMailer.request_email(@member_request).deliver
             redirect_to confirm_request_path
         end
     end
