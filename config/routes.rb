@@ -27,5 +27,8 @@ Rails.application.routes.draw do
 
   get "/contact/new", to: "contact#new", as: "new_contact"
 
+  get "/members", to: "member_area#index", as: "member_index"
+  post "/members/create_post", to: "member_area#create_post", as:"create_member_post"
+
 
 end

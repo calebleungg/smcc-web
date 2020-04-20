@@ -20,6 +20,9 @@
                     </li>
                 <% end %>
                 <li class="nav-item">
+                    <%= link_to "Members Area", member_index_path, class:"nav-link"%>
+                </li>
+                <li class="nav-item">
                     <%= link_to current_user.name, root_path, class:"nav-link"%>
                 </li>
                 <li class="nav-item">

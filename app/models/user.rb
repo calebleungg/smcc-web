@@ -5,6 +5,7 @@ class User < ApplicationRecord
 			:recoverable, :rememberable, :validatable
 
 	has_one_attached :avatar
+	has_many :member_posts
 
 	def name
 		return "#{self.first_name} #{self.last_name} "

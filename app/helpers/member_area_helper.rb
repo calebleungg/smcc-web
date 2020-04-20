@@ -1,0 +1,2 @@
+module MemberAreaHelper
+end

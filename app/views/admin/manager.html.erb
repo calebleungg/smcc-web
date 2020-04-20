@@ -9,6 +9,7 @@
 					<td> Last name </td>
 					<td> Email </td>
 					<td> Year grad </td>
+					<td> Country </td>
 					<td> Phone </td>
 					<td> Address </td>
 					<td> Password pref </td>
@@ -21,6 +22,7 @@
 							<td> <%= request.last_name %> </td>
 							<td> <%= request.email %> </td>
 							<td> <%= request.year_graduated %> </td>
+							<td> <%= request.country %> </td>
 							<td> <%= number_to_phone request.phone.to_i %> </td>
 							<td> <%= request.address %> </td>
 							<td> <%= request.password_pref %> </td>

@@ -375,3 +375,62 @@
         font-weight: 500;
     }
 }
+
+.member-area-container {
+    padding-top: 30px;
+}
+
+.member-list {
+    display: flex;
+    flex-direction: column;
+    #user_picture {
+        width: 100px;
+        height: 100px;
+    }
+    .member-card {
+        display: flex;
+        align-items: center;
+        margin: 3px 0;
+        img {
+            margin-right: 10px;
+        }
+        span {
+            &:first-child {
+                font-weight: 600;
+                font-size: 100%;
+                opacity: 100%;
+            }
+            font-size: 80%;
+            opacity: 80%;
+        }
+    }
+}
+.post-input-box {
+    border: 1px solid lightgrey;
+    padding: 10px;
+    // display: flex;
+    #post-message-input {
+        font-size: 110%;
+        min-width: 100%;
+        padding: 10px;
+        border: none;
+        &:focus {
+            outline: none;
+        }
+    }
+    #message-post-btn {
+        margin-top: 10px;
+        font-size: 100%;
+        width: 100px;
+        height: 40px;
+        background-color: $main-color;
+        font-weight: 500;
+        color: white;
+        opacity: 70%;
+        border: none;
+    }
+}
+.post-board {
+    display: flex;
+    flex-direction: column;
+}
