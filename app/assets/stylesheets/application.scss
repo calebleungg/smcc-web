@@ -23,6 +23,8 @@
      .nav-link {
         color: white;
      }
+     width: 100%;
+     position: fixed;
  }
  #navbarSupportedContent {
     display: flex;
@@ -458,8 +460,8 @@
     flex-direction: column;
     width: 500px;
     padding: 20px 0;
-    height: 100vh;
-    overflow: scroll;
+    // height: 100vh;
+    // overflow: auto;
 
     .post-item {
         border: 1px solid lightgrey;
@@ -574,4 +576,7 @@
             }
         }
     }
+}
+#member-area-title {
+    padding-top: 100px;
 }

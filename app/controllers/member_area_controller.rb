@@ -3,8 +3,8 @@ class MemberAreaController < ApplicationController
     def index
         @members = User.all
         @albums = Album.all
-        @posts = MemberPost.all.order("created_at DESC")
-        @events = Event.all.order("created_at DESC")
+        @posts = MemberPost.all.order("created_at DESC").limit(20)
+        @events = Event.all.order("created_at ASC")
     end
 
     def create_post
