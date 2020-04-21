@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_042419) do
+ActiveRecord::Schema.define(version: 2020_04_21_023443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 2020_04_20_042419) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "events", force: :cascade do |t|
+    t.string "name"
+    t.string "about"
+    t.string "location"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "member_posts", force: :cascade do |t|
     t.string "message"
     t.bigint "user_id"
@@ -99,6 +108,16 @@ ActiveRecord::Schema.define(version: 2020_04_20_042419) do
     t.index ["album_id"], name: "index_photos_on_album_id"
   end
 
+  create_table "post_replies", force: :cascade do |t|
+    t.string "message"
+    t.bigint "user_id"
+    t.bigint "member_post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_post_id"], name: "index_post_replies_on_member_post_id"
+    t.index ["user_id"], name: "index_post_replies_on_user_id"
+  end
+
   create_table "sections", force: :cascade do |t|
     t.string "title"
     t.text "content"
@@ -128,4 +147,6 @@ ActiveRecord::Schema.define(version: 2020_04_20_042419) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "member_posts", "users"
   add_foreign_key "photos", "albums"
+  add_foreign_key "post_replies", "member_posts"
+  add_foreign_key "post_replies", "users"
 end

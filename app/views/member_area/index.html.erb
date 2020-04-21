@@ -1,35 +1,163 @@
-<div class="member-area-container">
-    <h1> Members Area </h1>
-
-    <div class="post-input-box">
-        <%= form_with model:@member_post, url: create_member_post_path, method: :post do |form| %>
-            <%= form.text_field :message, placeholder: "Post a message", id:"post-message-input"%>
-            <%= form.submit "Post", id:"message-post-btn"%>
-        <% end %>
-    </div>
-
-    <div class="post-board">
-        <% for post in @posts %>
-            <p>
-                <%= post.poster.name %>
-                <%= post.message %>
-            </p>
-        <% end %>
-    </div>
-
-    <div class= "member-list">
-        <h3> Member List</h3>
-        <% for user in @members %>
-            <div class="member-card">
-                <%= image_tag "default-dp.png", id:"user_picture"%>
-                <div>
-                    <span><%= user.name %><span><br>
-                    <span><%= user.email %></span><br>
-                    <span><%= user.country %></span>
-                </div>
+<h1> Members Area </h1>
+<div class="member-album-list">
+    <% for album in @albums %>
+        <%= link_to album_path(album.id) do %>
+            <div class="album-item">
+                <strong> <p> <%= album.title %> </p> </strong>
+                <%= image_tag album.photos[0].image %>
             </div>
         <% end %>
+    <% end %>
+</div>
+
+<div class="member-area-container">
+
+    <div class="member-list-container">
+
+        <div class= "member-list">
+            <strong> <p> Members</p> </strong>
+            <% for user in @members %>
+                <div class="member-card">
+                    <%= image_tag user.get_avatar, id:"user_picture"%>
+                    <div>
+                        <span><%= user.name %><span><br>
+                        <span><%= user.email %></span><br>
+                        <span><%= user.country %></span>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+
     </div>
+
+    <div class="message-area-container">
+
+        <div class="post-input-box">
+            <%= form_with model:@member_post, url: create_member_post_path, method: :post do |form| %>
+                <%= form.text_field :message, placeholder: "Post a message", id:"post-message-input"%>
+                <%= form.submit "Post", id:"message-post-btn"%>
+            <% end %>
+        </div>
+
+        <div class="post-board">
+            <% for post in @posts %>
+                <div class="post-item">
+                    <div class="post-details">
+                        <%= image_tag post.poster.get_avatar %>
+                        <div>
+                            <span id="poster-name"><%= post.poster.name %></span> <br/>
+                            <span id="post-time">
+                                <% if DateFormat.time_difference(post.created_at, "PRESENT_DAY", "DAY_ONLY") == "0 Days" %>
+                                    <% if DateFormat.time_difference(post.created_at, "PRESENT_DAY", "HOUR_ONLY") == "0 Hrs" %>
+                                        <%= "#{DateFormat.time_difference(post.created_at, "PRESENT_DAY", "MINUTE_ONLY")} Ago"%> 
+                                    <% else %>
+                                        <%= "#{DateFormat.time_difference(post.created_at, "PRESENT_DAY", "HOUR_ONLY")} Ago"%>
+                                    <% end %> 
+                                <% else %>
+                                    <%= "#{DateFormat.time_difference(post.created_at, "PRESENT_DAY", "DAY_ONLY")} Ago"%> 
+                                <% end %>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="post-message">
+                        <%= post.message %>
+                    </p>
+                    <hr>
+                    <% if post.post_replies.length > 0 %>
+                        <div class="post-replies">
+                            <% for reply in post.post_replies %>
+                                <div class="reply-item">
+                                    <%= image_tag reply.replier.get_avatar, id:"reply-picture" %> 
+                                    <div class="reply-message-wrapper">
+                                        <span id="reply-message"> 
+                                            <strong><%= reply.replier.name %></strong> <%= reply.message %>
+                                        </span>
+                                        <span id="reply-time">
+                                            <% if DateFormat.time_difference(reply.created_at, "PRESENT_DAY", "DAY_ONLY") == "0 Days" %>
+                                                <% if DateFormat.time_difference(reply.created_at, "PRESENT_DAY", "HOUR_ONLY") == "0 Hrs" %>
+                                                    <%= "#{DateFormat.time_difference(reply.created_at, "PRESENT_DAY", "MINUTE_ONLY")}"%> 
+                                                <% else %>
+                                                    <%= "#{DateFormat.time_difference(reply.created_at, "PRESENT_DAY", "HOUR_ONLY")}"%>
+                                                <% end %> 
+                                            <% else %>
+                                                <%= "#{DateFormat.time_difference(reply.created_at, "PRESENT_DAY", "DAY_ONLY")}"%> 
+                                            <% end %>
+                                        </span>
+                                    </div>
+                                </div>
+                            <% end %>
+                        </div>
+                        <hr>
+                    <% end %>
+                    <%= form_with model:@post_reply, url: create_post_reply_path, method: :post do |form| %>
+                        <%= image_tag "default-dp.png", id:"reply-picture"%>
+                        <%= form.hidden_field :post_id, value: post.id %>
+                        <%= form.text_field :message, placeholder: "Write a reply", id:"reply-message-input"%>
+                    <% end %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+
+    <div class="event-container">
+        <strong><span> Events </span></strong>
+        <button id="event-add-btn" data-toggle="modal" data-target="#addEventModal"> Create Event </button><br/><br/>
+
+        <% for event in @events %>
+            <div class="event-item">
+
+                <div class="event-item-top-container">
+
+                    <div class="main-date-display">
+                        <span id="event-month"> <%= DateFormat.change_to(event.date, "ONLY_CURRENT_MONTH_ALPHABET") %> </span><br/>
+                        <span id="event-day-number"> <%= DateFormat.change_to(event.date, "ONLY_CURRENT_DATE_NUMBER") %> </span>
+                    </div>
+
+                    <div class="event-details-display">
+                        <span id="event-name"> <%= event.name %> </span><br/>
+                        <span id="event-day-week"> <%= DateFormat.change_to(event.date, "ONLY_CURRENT_DATE_ALPHABET") %> </span>
+                        <span id="event-time"> <%= DateFormat.change_to(event.date, "MEDIUM_TIME") %> </span><br/>
+                        <span id="event-location"> <%= event.location %> </span>
+                    </div>
+                </div>
+                <hr>
+
+                <span id="event-about"> <%= event.about %> </span>
+            </div>
+        <% end %>
+
+
+
+
+        <div class="modal fade" id="addEventModal" tabindex="-1" role="dialog" aria-labelledby="addEventModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addEventModalLabel">New Event</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="add-album-form">
+                        <%= form_with model:@event, url: create_event_path, method: :post do |form|%>
+                            <%= form.label :name, "Event Name"%><br/>
+                            <%= form.text_field :name %><br/>
+                            <%= form.label :date, "Date"%><br/>
+                            <%= form.datetime_field :date %><br/>
+                            <%= form.label :location, "Location"%><br/>
+                            <%= form.text_field :location %><br/>
+                            <%= form.label :about, "Details"%><br/>
+                            <%= form.text_area :about %><br/>
+                            <%= form.submit "Add Event", class:"save-btn" %>
+                        <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
 </div>
 
 <script>

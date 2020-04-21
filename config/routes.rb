@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   get "/members", to: "member_area#index", as: "member_index"
   post "/members/create_post", to: "member_area#create_post", as:"create_member_post"
+  post "/members/create_reply", to: "member_area#create_reply", as:"create_post_reply"
+  post "/members/create_event", to: "member_area#create_event", as:"create_event"
 
 
 end

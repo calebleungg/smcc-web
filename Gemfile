@@ -19,6 +19,8 @@ gem 'rails_sortable'
 gem 'acts_as_list'
 # tinymce
 gem 'tinymce-rails'
+#date formatter
+gem 'date_format'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
