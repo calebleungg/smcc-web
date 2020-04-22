@@ -27,10 +27,8 @@
                 <%= form.text_area :message, placeholder: "Post a message", id:"post-message-input"%>
                 <%= form.submit "Post", id:"message-post-btn"%>
                 <% if current_user.admin %>
-                    <span class="announc-check">
-                        <%= form.label :announcement, "Announcement"%>
-                        <%= form.check_box :announcement %>
-                    </span>
+                    <%= form.submit "Announcement", id:"announc-post-btn"%>
+                    <%= form.hidden_field :announcement, value: true %>
                 <% else %>
                     <%= form.hidden_field :announcement, value: false %>
                 <% end %>
