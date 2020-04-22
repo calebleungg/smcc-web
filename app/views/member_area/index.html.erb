@@ -24,13 +24,11 @@
 
         <div class="post-input-box">
             <%= form_with model:@member_post, url: create_member_post_path, method: :post do |form| %>
-                <%= form.text_area :message, placeholder: "Post a message", id:"post-message-input"%>
+                <%= form.text_area :message, placeholder: "Post a message", required: true, id:"post-message-input"%>
                 <%= form.submit "Post", id:"message-post-btn"%>
                 <% if current_user.admin %>
-                    <%= form.submit "Announcement", id:"announc-post-btn"%>
-                    <%= form.hidden_field :announcement, value: true %>
-                <% else %>
-                    <%= form.hidden_field :announcement, value: false %>
+                    <%= form.label :announcement, "Announcement", id:"announc-check"%>
+                    <%= form.check_box :announcement, {}, true, false%>
                 <% end %>
             <% end %>
         </div>

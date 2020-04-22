@@ -10,7 +10,12 @@ class MemberAreaController < ApplicationController
 
     def create_post
         user = current_user
-        user.member_posts.create(message: params[:message], announcement: params[:announcement])
+        if params[:announcement]
+            user.member_posts.create(message: params[:message], announcement: true )
+        else
+            user.member_posts.create(message: params[:message], announcement: false )
+        end
+
         if user.save && user.valid?
             redirect_back(fallback_location: member_index_path)
         end
