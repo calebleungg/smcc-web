@@ -1,31 +1,42 @@
-<div class="title-graphic">
-    <h1> SMCC CLASS 76</h1>
-    <%= image_tag "banner.JPG", id:"banner-img"%>
-</div>
+<div class="main-page-container">
 
-<div class="welcome-wrapper">
-    <div class="welcome-about">
-        <h3> <%= @history.title %> </h3>
-        <p> <%= @history.content.html_safe %></p>
+    <div class="title-graphic">
+        <h1> SMCC CLASS 76</h1>
+        <%= image_tag "banner-photo.jpg", id:"banner-img"%>
     </div>
-    <%= image_tag "index-img-1.jpg"%>
-</div>
 
-<div class="purpose-wrapper">
-    <%= image_tag "index-img-2.jpg"%>
-    <div class="purpose-about">
-        <h3> <%= @purpose.title %> </h3>
-        <p> <%= @purpose.content.html_safe %> </p>
-    </div>
-</div>
-
-<div class="index-album-wrapper">
-    <% for album in @albums %>
-        <%= link_to album_path(album.id) do %>
-            <div class="index-album-box">
-                <h3> <%= album.title %> </h3>
-                <%= image_tag album.photos[0].image, id:"cover-img"%> 
-            </div>
+    <div class="main-member-nav-btns">
+        <% if user_signed_in? %>
+            <%= link_to "Members Area", member_index_path, id:"join-btn" %>
+        <% else %>
+            <%= link_to "Join the Community", new_request_path, id:"join-btn" %>
         <% end %>
-    <% end %>
+    </div>
+
+    <div class="welcome-wrapper">
+        <div class="welcome-about">
+            <h3> <%= @history.title %> </h3>
+            <p> <%= @history.content.html_safe %></p>
+        </div>
+        <%= image_tag "history-photo.jpg"%>
+    </div>
+
+    <div class="purpose-wrapper">
+        <%= image_tag "purpose-photo.jpg"%>
+        <div class="purpose-about">
+            <h3> <%= @purpose.title %> </h3>
+            <p> <%= @purpose.content.html_safe %> </p>
+        </div>
+    </div>
+
+    <div class="index-album-wrapper">
+        <% for album in @albums %>
+            <%= link_to album_path(album.id) do %>
+                <div class="index-album-box">
+                    <p> <strong> <%= album.title %> </strong> </p>
+                    <%= image_tag album.photos[0].image, id:"cover-img"%> 
+                </div>
+            <% end %>
+        <% end %>
+    </div>
 </div>

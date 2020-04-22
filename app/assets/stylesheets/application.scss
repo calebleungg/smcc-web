@@ -16,6 +16,10 @@
 
  $main-color: #2f88b1;
 
+ body {
+    background-color: #f0f0f0;
+ }
+
  .navbar {
      height: 6vh;
      background-color: $main-color;
@@ -52,9 +56,49 @@
      color: black
  }
 
+//  .main-page-container {
+//      display: flex;
+//      flex-direction: column;
+//     justify-content: center;
+//      align-items: center;
+//   }
+
+ .main-member-nav-btns {
+     margin: 50px 0;
+     text-align: center;
+     a {
+         text-decoration: none;
+     }
+     #join-btn {
+         font-size: 120%;
+         background-color: $main-color;
+         padding: 20px;
+         height: 60px;
+         width: 100px;
+         color: white;
+         font-weight: 500;
+         margin: 0 20px;
+         border: 1px solid lightgrey;
+         border-radius: 5px;
+         &:hover {
+             color: $main-color;
+             background-color: white;
+         }
+         &:nth-child(2) {
+             background-color: darkgreen;
+             &:hover {
+                color: darkgreen;
+                background-color: white;
+             }
+         }
+     }
+ }
+
 #banner-img {
     width: 100%;
     height: auto;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
 }
 #school-logo-img {
     width: 200px;
@@ -64,45 +108,50 @@
     position: absolute;
 }
 .title-graphic {
+    text-align: center;
     background-color: #f0f0f0;
     padding-top: 6vh;
     h1 {
         text-align: center;
         font-weight: 700;
+        padding: 10px 0;
     }
 }
 .welcome-about {
     width: 60%;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: white;
 }
 
 .purpose-about {
     width: 60%;
     padding: 20px;
-    background-color: #f0f0f0;
+    background-color: white;
 }
 .purpose-wrapper {
+    background-color: white;
+    border-radius: 5px;
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-top: 50px;
     img {
-        height: auto;
-        width:40%;
+        height: 300px;
+        width: auto;
     }
-    box-shadow: 0 0 5px grey;
+    border: 1px solid lightgrey;
 }
 .welcome-wrapper {
     width: 100%;
     display: flex;
     justify-content: flex-start;
     margin-top: 50px;
-    box-shadow: 0 0 5px grey;
     img {
         height: auto;
         width:40%;
     }
+    border-radius: 5px;
+    border: 1px solid lightgrey;
 }
 #add-album-form {
    input, textarea {
@@ -136,7 +185,8 @@
     display: flex;
     flex-wrap: wrap;
     .card {
-        width: 300px;
+        font-size: 80%;
+        width: 200px;
         margin-right: 20px;
     }
     a {
@@ -144,7 +194,7 @@
         text-decoration: none;
     }
     .card-img-top {
-        height: 300px;
+        height: 200px;
     }
     
 }
@@ -212,6 +262,7 @@
 .index-album-wrapper {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     padding: 50px 0;
     a {
         color: black;
@@ -227,10 +278,14 @@
         // box-shadow: 0 0 5px grey;
         background-color: #f0f0f0;
     }
+    border: 1px solid lightgrey;
+    background-color: white;
+    border-radius: 5px;
+    margin: 0 10px;
 
     #cover-img {
-        width: 500px;
-        height: 380px;
+        width: 300px;
+        height: 300px;
     }
     .small-img-footer {
         margin-top: 10px;
@@ -262,17 +317,22 @@
 }
 .admin-container {
     padding-top: 6vh;
-    h3 {
-        padding: 10px;
-        background-color: #f0f0f0;
-        font-weight: 600;
-        max-width: 360px;
-    }
+
     .page-details-title {
         margin-top: 30px;
         margin-bottom: 20px;
     }
+    .page-info-wrapper {
+        background-color: white;
+        padding: 10px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+    }
     .page-messages-wrapper {
+        background-color: white;
+        padding: 10px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
         margin: 50px 0;
         .request-table {
             tr {
@@ -302,6 +362,18 @@
             padding: 5px;
         }
     }
+
+    .album-manager-container {
+        background-color: white;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        padding: 10px;
+        img {
+            height: 200px;
+            width: 200px;
+        }
+        margin-top: 50px;
+    }
     
     .album-title-section {
         display: flex;
@@ -310,10 +382,9 @@
             margin-left: 20px;
             width: 120px;
             height: 40px;
-            margin-top: 8px;
+            // margin-top: 8px;
         }
         margin-bottom: 20px;
-        margin-top: 50px;
     }
 }
 .member-request-container {
@@ -387,6 +458,10 @@
     flex-direction: row;
 }
 .member-album-list {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
     .member-album-box {
         display: flex;
         flex-wrap: wrap;
@@ -414,8 +489,10 @@
     display: flex;
     flex-direction: column;
     font-size: 90%;
-    // height: 70vh;
-    // overflow: scroll;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    padding: 10px;
     #user_picture {
         width: 70px;
         height: 70px;
@@ -426,6 +503,7 @@
         margin: 3px 0;
         img {
             margin-right: 10px;
+            border-radius: 100%;
         }
         span {
             &:first-child {
@@ -442,7 +520,8 @@
     border: 1px solid lightgrey;
     padding: 10px;
     margin-bottom: 10px;
-    // display: flex;
+    background-color: white;
+    border-radius: 5px;
     #post-message-input {
         font-size: 110%;
         min-width: 100%;
@@ -467,6 +546,7 @@
         margin-left: 100px;
     }
 }
+
 .message-area-container {
     margin: 0 20px;
 }
@@ -474,10 +554,10 @@
     display: flex;
     flex-direction: column;
     width: 500px;
-
     .post-item {
+        background-color: white;
         border: 1px solid lightgrey;
-        border-radius: 3px;
+        border-radius: 5px;
         padding: 10px;
         margin: 5px 0;
         #close-announc-btn {
@@ -568,6 +648,8 @@
         border: 1px solid lightgrey;
         padding: 20px 10px;
         margin-bottom: 20px;
+        background-color: white;
+        border-radius: 5px;
         .main-date-display {
             // border: 1px solid lightgrey;
             padding: 0 10px;
@@ -600,4 +682,37 @@
 
 .login-container {
     padding-top: 6vh;
+}
+
+.login-container {
+    display: flex;
+    min-height: 80vh;
+    width: 100%;
+    img {
+        width: 200px;
+        height: 200px;
+        margin-right: 50px;
+    }
+    justify-content: center;
+    align-items: center;
+
+    .login-input-box {
+        #entry-fields {
+            background-color: white;
+            // border: 1px solid lightgrey;
+            // border-radius: 5px;
+            width: 300px;
+            padding: 5px;
+            font-weight: 500;
+            margin: 5px 0;
+        }
+    }
+    #login-btn {
+        padding: 5px 30px;
+        background-color: $main-color;
+        color: white;
+        font-weight: 500;
+        margin-top: 10px;
+        border: none;
+    }
 }

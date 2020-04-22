@@ -2,7 +2,7 @@
 	<% if current_user.admin %>
 
 		<div class="page-messages-wrapper">
-			<h3> Member Applications</h3>
+			<p> <strong> Member Applications </strong></p>
 			<table class="request-table">
 				<tr>
 					<td> First name </td>
@@ -74,7 +74,7 @@
 			</table>
 		</div>
 		<div class="page-info-wrapper">
-			<h3 class="page-details-title"> Home Page Info-Sections </h3>
+			<p> <strong> Home Page Info-Sections </strong></p>
 			<div class="page-section">
 				<% if params[:edit] == "about" %>
 					<%= form_with model: @section, url: update_section_path, method: :patch do |form| %>
@@ -105,24 +105,27 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="album-title-section">
-			<h3> Albums </h3>
-			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-			Create Album
-			</button>
-		</div>
-		<div class="album-list">
-			<% for album in @albums %>
-				<%= link_to album_path(album.id) do %>
-					<div class="card">
-						<%= image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg" , class:"card-img-top"%>
-						<div class="card-body">
-							<p class="card-text"><strong><%= album.title%></strong></p>
-							<p class="card-text"><%= album.description%></p>
+
+		<div class="album-manager-container">
+			<div class="album-title-section">
+				<span> <strong> Home Page Info-Sections </strong></span>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+				Create Album
+				</button>
+			</div>
+			<div class="album-list">
+				<% for album in @albums %>
+					<%= link_to album_path(album.id) do %>
+						<div class="card">
+							<%= image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg" , class:"card-img-top"%>
+							<div class="card-body">
+								<p class="card-text"><strong><%= album.title%></strong></p>
+								<p class="card-text"><%= album.description%></p>
+							</div>
 						</div>
-					</div>
+					<% end %>
 				<% end %>
-			<% end %>
+			</div>
 		</div>
 
 		<!-- Modal -->
