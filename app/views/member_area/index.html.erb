@@ -1,14 +1,4 @@
 <h1 id="member-area-title"> Members Area </h1>
-<div class="member-album-list">
-    <% for album in @albums %>
-        <%= link_to album_path(album.id) do %>
-            <div class="album-item">
-                <strong> <p> <%= album.title %> </p> </strong>
-                <%= image_tag album.photos[0].image %>
-            </div>
-        <% end %>
-    <% end %>
-</div>
 
 <div class="member-area-container">
 
@@ -34,12 +24,51 @@
 
         <div class="post-input-box">
             <%= form_with model:@member_post, url: create_member_post_path, method: :post do |form| %>
-                <%= form.text_field :message, placeholder: "Post a message", id:"post-message-input"%>
+                <%= form.text_area :message, placeholder: "Post a message", id:"post-message-input"%>
                 <%= form.submit "Post", id:"message-post-btn"%>
+                <% if current_user.admin %>
+                    <span class="announc-check">
+                        <%= form.label :announcement, "Announcement"%>
+                        <%= form.check_box :announcement %>
+                    </span>
+                <% else %>
+                    <%= form.hidden_field :announcement, value: false %>
+                <% end %>
             <% end %>
         </div>
 
         <div class="post-board">
+            <p> <strong> Announcements </strong> </p>
+            <% for announcement in @announcements %>
+                <div class="post-item">
+                    <div class="post-details">
+                        <%= image_tag announcement.poster.get_avatar %>
+                        <div>
+                            <span id="poster-name"><%= announcement.poster.name %></span> <br/>
+                            <span id="post-time">
+                                <% if DateFormat.time_difference(announcement.created_at, "PRESENT_DAY", "DAY_ONLY") == "0 Days" %>
+                                    <% if DateFormat.time_difference(announcement.created_at, "PRESENT_DAY", "HOUR_ONLY") == "0 Hrs" %>
+                                        <%= "#{DateFormat.time_difference(announcement.created_at, "PRESENT_DAY", "MINUTE_ONLY")} Ago"%> 
+                                    <% else %>
+                                        <%= "#{DateFormat.time_difference(announcement.created_at, "PRESENT_DAY", "HOUR_ONLY")} Ago"%>
+                                    <% end %> 
+                                <% else %>
+                                    <%= "#{DateFormat.time_difference(announcement.created_at, "PRESENT_DAY", "DAY_ONLY")} Ago"%> 
+                                <% end %>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="post-message">
+                        <%= announcement.message %>
+                    </p>
+                    <%= link_to "remove", remove_announc_path(announcement.id), method: :patch, id:"close-announc-btn" if current_user.admin %>
+                </div>
+            <% end %>
+        </div>
+
+        <hr>
+        <div class="post-board">
+            <p> <strong> Posts </strong> </p>
             <% for post in @posts %>
                 <div class="post-item">
                     <div class="post-details">
@@ -62,6 +91,7 @@
                     <p class="post-message">
                         <%= post.message %>
                     </p>
+                    <%= link_to "remove", delete_post_path(post.id), method: :delete, id:"close-announc-btn" if current_user.admin || current_user.id == post.user_id %>
                     <hr>
                     <% if post.post_replies.length > 0 %>
                         <div class="post-replies">
@@ -100,6 +130,21 @@
     </div>
 
     <div class="event-container">
+
+        <div class="member-album-list">
+            <strong><p> Albums </p></strong>
+            <div class="member-album-box">
+            <% for album in @albums %>
+                <%= link_to album_path(album.id) do %>
+                    <div class="album-item">
+                        <strong> <p> <%= album.title %> </p> </strong>
+                        <%= image_tag album.photos[0].image %>
+                    </div>
+                <% end %>
+            <% end %>
+            </div>
+        </div>
+        <hr>
         <strong><span> Events </span></strong>
         <button id="event-add-btn" data-toggle="modal" data-target="#addEventModal"> Create Event </button><br/><br/>
 

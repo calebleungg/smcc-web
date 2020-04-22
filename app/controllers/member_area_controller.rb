@@ -3,13 +3,14 @@ class MemberAreaController < ApplicationController
     def index
         @members = User.all
         @albums = Album.all
-        @posts = MemberPost.all.order("created_at DESC").limit(20)
+        @posts = MemberPost.where(announcement: false).order("created_at DESC").limit(20)
         @events = Event.all.order("created_at ASC")
+        @announcements = MemberPost.where(announcement: true).order("created_at DESC")
     end
 
     def create_post
         user = current_user
-        user.member_posts.create(message: params[:message])
+        user.member_posts.create(message: params[:message], announcement: params[:announcement])
         if user.save && user.valid?
             redirect_back(fallback_location: member_index_path)
         end
@@ -33,6 +34,24 @@ class MemberAreaController < ApplicationController
         )
         if event.save && event.valid?
             redirect_back(fallback_location: member_index_path)
+        end
+    end
+
+    def delete_post
+        post = MemberPost.find(params[:id])
+        replies = post.post_replies
+        replies.destroy_all
+        post.destroy
+        redirect_back(fallback_location: member_index_path)
+    end
+
+    def remove_announc
+        if current_user.admin
+            post = MemberPost.find(params[:id])
+            post.announcement = false
+            if post.save && post.valid?
+                redirect_back(fallback_location: member_index_path)
+            end
         end
     end
 

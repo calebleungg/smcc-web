@@ -387,19 +387,28 @@
     flex-direction: row;
 }
 .member-album-list {
-    display: flex;
-    flex-direction: row;
+    .member-album-box {
+        display: flex;
+        flex-wrap: wrap;
+    }
     img {
-        width: 200px;
-        height: 200px;
+        width: 100px;
+        height: 100px;
     }
     .album-item {
-        margin-right: 50px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 100px;
+        margin: 5px;
+        p {
+            font-size: 80%;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 100px;
+        }
     }
-    overflow-x: scroll;
+    // overflow-x: scroll;
 }
 .member-list {
     display: flex;
@@ -454,6 +463,9 @@
         opacity: 70%;
         border: none;
     }
+    .announc-check {
+        margin-left: 100px;
+    }
 }
 .message-area-container {
     margin: 0 20px;
@@ -462,15 +474,16 @@
     display: flex;
     flex-direction: column;
     width: 500px;
-    padding: 20px 0;
-    // height: 100vh;
-    // overflow: auto;
 
     .post-item {
         border: 1px solid lightgrey;
         border-radius: 3px;
         padding: 10px;
         margin: 5px 0;
+        #close-announc-btn {
+            font-size: 90%;
+
+        }
         img {
             width: 50px;
             height: 50px;
@@ -543,6 +556,7 @@
         background-color: $main-color;
         color: white;
         border: none;
+        margin-left: 10px;
     }
     #add-album-form {
         input, textarea {

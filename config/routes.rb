@@ -32,5 +32,8 @@ Rails.application.routes.draw do
   post "/members/create_reply", to: "member_area#create_reply", as:"create_post_reply"
   post "/members/create_event", to: "member_area#create_event", as:"create_event"
 
+  patch "/members/remove_announc/:id", to: "member_area#remove_announc", as:"remove_announc"
+  delete "/members/delete_post/:id", to: "member_area#delete_post", as:"delete_post"
+
 
 end
