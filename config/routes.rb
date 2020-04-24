@@ -7,9 +7,11 @@ Rails.application.routes.draw do
   get "/admin", to: "admin#manager", as: "admin"
 
   get "/albums/show/:id", to: "album#show", as: "album"
+  get "/users/show/:id", to: "user#show", as: "user"
 
   post "/album/create", to: "album#create", as: "create_album"
   post "/album/:id/photo/add", to: "photo#add", as: "add_photo"
+  patch "/user/:id/add_avatar", to: "user#upload_avatar", as: "upload_avatar"
 
   patch "/section/update", to: "section#update", as: "update_section"
   patch "/album/:id/update/public", to: "album#update_public", as: "update_public"
@@ -34,6 +36,8 @@ Rails.application.routes.draw do
 
   patch "/members/remove_announc/:id", to: "member_area#remove_announc", as:"remove_announc"
   delete "/members/delete_post/:id", to: "member_area#delete_post", as:"delete_post"
+
+  patch "/user/:id/edit", to: "user#edit", as: "edit_user"
 
 
 end

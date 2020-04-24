@@ -392,15 +392,21 @@
 }
 .member-request-container {
     h1 {
-        margin-top: 80px;
+        margin-top: 15vh;
         font-weight: 600;
+        font-size: 150%;
     }
+
     p {
-        text-align: center;
+        font-size: 100%;
+        // text-align: center;
+    }
+    #request-instruc {
+        width: 420px;
     }
     #contact-prompt {
         padding: 20px 0;
-        font-size: 1.3em;
+        font-size: 100%;
     }
     display: flex;
     flex-direction: column;
@@ -408,13 +414,20 @@
     .request-form {
         padding: 60px;
         background-color: $main-color;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
         input, textarea {
+            font-size: 90%;
             width: 300px;
-            // background-color: #f0f0f0;
-            padding: 5px;
-            border: none;
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
             margin: 5px 0;
             color: black;
+            &:focus {
+                outline: none;
+            }
         }
         textarea {
             height: 200px;
@@ -442,16 +455,15 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 100px;
     img {
         width: 300px;
         height: auto;
         margin-top: 20px;
     }
     p {
+        margin-top: 12vh;
         text-align: center;
-        font-size: 1.5em;
-        font-weight: 500;
+        font-size: 100%;
     }
 }
 
@@ -552,6 +564,9 @@
 
 .message-area-container {
     margin: 0 20px;
+    img {
+        border-radius: 100%;
+    }
 }
 .post-board {
     display: flex;
@@ -717,5 +732,51 @@
         font-weight: 500;
         margin-top: 10px;
         border: none;
+    }
+}
+
+.account-container {
+    padding-top: 6vh;
+    font-size: 100%;
+    display: flex;
+    flex-direction: row;
+    h4 {
+        margin-top: 50px;
+    }
+    .image-box {
+        text-align: center;
+        img {
+            margin-top: 10px;
+            border-radius: 100%;
+            height: 200px;
+            width: 200px;
+        }
+        width: 300px;
+    }
+    .details-item {
+        width: 600px;
+        #details-title {
+            opacity: 80%;
+            font-size: 80%;
+        }
+        #user-details {
+            font-weight: 500;
+        }
+        input {
+            background-color: none;
+            border: none;
+            padding: 5px 10px;
+            width: 600px;
+            &:focus {
+                outline: none;
+            }
+        }
+        #name-input {
+            width: 250px;
+        }
+    }
+    .text-details {
+        margin-top: 100px;
+
     }
 }
