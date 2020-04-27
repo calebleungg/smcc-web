@@ -2,6 +2,23 @@
 	<% if current_user.admin %>
 
 		<div class="page-messages-wrapper">
+			<p> <strong> Contact Messages </strong></p>
+			
+			<% for message in @contacts %>
+				<div class="message-item"> 
+					<div class="contacter-details">
+						<span id="name-span"> <%= message.name%> </span><br>
+						<span id="sub-contact-details"> <%= message.email%> </span><br>
+						<span id="sub-contact-details"> <%= message.phone%> </span>
+					</div>
+					<div class="message-contents">
+						<p id="message-date"> <%= DateFormat.change_to(message.created_at, "MEDIUM_DATE")%> </p>
+						<p> <%= message.message%> </p>
+					</div>
+				</div>
+				<hr>
+			<% end %>
+		
 			<p> <strong> Member Applications </strong></p>
 			<table class="request-table">
 				<tr>

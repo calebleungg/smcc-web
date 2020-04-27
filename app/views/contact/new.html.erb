@@ -7,7 +7,7 @@
 
     <div class="request-form">
         <div class="contact-form">
-            <%= form_with model:@contact_request, url: root_path, method: :post do |form| %>
+            <%= form_with model:@contact_request, url: create_contact_path, method: :post do |form| %>
                 <%= form.text_field :name, placeholder: "Name", required: true%><br>
                 <%= form.email_field :email, placeholder: "Email", required: true%><br>
                 <%= form.text_field :phone, placeholder: "Phone", required: true%><br>

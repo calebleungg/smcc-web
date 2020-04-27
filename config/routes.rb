@@ -39,5 +39,6 @@ Rails.application.routes.draw do
 
   patch "/user/:id/edit", to: "user#edit", as: "edit_user"
 
+  post "/contact/create", to: "contact#create", as: "create_contact"
 
 end

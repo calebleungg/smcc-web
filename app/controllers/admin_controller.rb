@@ -5,6 +5,7 @@ class AdminController < ApplicationController
         @section1 = Section.find(1)
         @section2 = Section.find(2)
         @requests = MemberRequest.where(approved: false)
+        @contacts = ContactRequest.all.order("created_at DESC")
     end
 
     def approve

@@ -781,3 +781,23 @@
 
     }
 }
+
+.message-item {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0;
+    .contacter-details {
+        min-width: 200px;
+        #name-span {
+            font-weight: 500;
+        }
+        #sub-contact-details {
+            font-size: 80%;
+            opacity: 80%;
+        }
+    }
+    #message-date {
+        font-size: 80%;
+        opacity: 80%;
+    }
+}

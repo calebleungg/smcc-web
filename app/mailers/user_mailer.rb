@@ -1,5 +1,5 @@
 class UserMailer < ApplicationMailer
-    # default :from => "notification@smcc.com"
+    default :from => "notification@smcc.com"
 
     def request_email(request)
         @request = request
