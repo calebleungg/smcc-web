@@ -4,20 +4,22 @@
 		<div class="page-messages-wrapper">
 			<p> <strong> Contact Messages </strong></p>
 			
-			<% for message in @contacts %>
-				<div class="message-item"> 
-					<div class="contacter-details">
-						<span id="name-span"> <%= message.name%> </span><br>
-						<span id="sub-contact-details"> <%= message.email%> </span><br>
-						<span id="sub-contact-details"> <%= message.phone%> </span>
-					</div>
-					<div class="message-contents">
-						<p id="message-date"> <%= DateFormat.change_to(message.created_at, "MEDIUM_DATE")%> </p>
-						<p> <%= message.message%> </p>
-					</div>
-				</div>
-				<hr>
-			<% end %>
+			<table class="message-list">
+				<% for message in @contacts %>
+					<%= link_to member_index_path do%>
+						<tr id="message-item">
+							<td> <%= message.name %> </td>
+							<td> <%= message.message %> </td>
+							<td> 
+								<%= link_to "<i class='fas fa-eye'></i>".html_safe, root_path %> 
+								<%= link_to "<i class='fas fa-reply'></i>".html_safe, root_path %> 
+								<%= link_to "<i class='fas fa-trash-alt'></i> ".html_safe, root_path %> 
+							</td>
+							<td> <%= DateFormat.change_to(message.created_at, "SHORT_DATE") %> </td>
+						</tr>
+					<% end %>
+				<% end %>
+			</table>
 		
 			<p> <strong> Member Applications </strong></p>
 			<table class="request-table">
@@ -73,11 +75,15 @@
 										<%= form.text_field :year_grad, value: request.year_graduated%><br/>
 										<%= form.label :phone, "Phone" %>
 										<%= form.text_field :phone, value: request.phone%><br/>
+										<%= form.label :country, "Country" %>
+										<%= form.text_field :phone, value: request.country%><br/>
 										<%= form.label :address, "Address" %>
-										<%= form.text_field :address, value: request.address%><br/>
-										<%= form.label :password, "Enter preferred password" %>
-										<%= form.password_field :password %><br/>
-										<%= form.submit "approve"%>
+										<%= form.text_field :address, value: request.address%><br/><br/>
+										<div>
+										<%= form.label :password, "Enter preferred password" %><br/>
+										<%= form.password_field :password %>
+										</div><br/>
+										<%= form.submit "approve", id:"submit-btn-approve"%>
 									<% end %>
 								</div>
 							</div>

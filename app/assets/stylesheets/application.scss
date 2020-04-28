@@ -341,10 +341,13 @@
             tr {
                 &:first-child {
                     font-weight: 600;
-                    background-color: lightgrey;
+                    font-size: 80%;
+                    // background-color: lightgrey;
+                    // border-bottom: 1px solid lightgrey;
                 }
             }
             td {
+                font-size: 95%;
                 padding: 5px;
                 padding-right: 20px;
             }
@@ -354,9 +357,16 @@
                 border: none;
                 background-color: #f0f0f0;
                 padding: 5px;
+                width: 300px;
             }
             label {
-                min-width: 200px;
+                font-size: 90%;
+                min-width: 100px;
+            }
+            #submit-btn-approve {
+                width: 100px;
+                background-color: $main-color;
+                color: white;
             }
         }
     }
@@ -782,22 +792,35 @@
     }
 }
 
-.message-item {
-    display: flex;
-    flex-direction: row;
-    margin: 10px 0;
-    .contacter-details {
-        min-width: 200px;
-        #name-span {
-            font-weight: 500;
+.message-list {
+    tr {
+        border-top: 1px solid lightgrey;
+        border-bottom: 1px solid lightgrey;
+        font-size: 90%;
+        td {
+            padding: 5px 10px;
         }
-        #sub-contact-details {
-            font-size: 80%;
+        td:first-child {
+            font-weight: 600;
+            min-width: 150px;
+        }
+        td:nth-child(2) {
+            max-width: 700px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        td:nth-child(3) {
+            min-width: 120px;
+            text-align: right;
+            i {
+                margin: 0 5px;
+                color: #726f6f;
+            }
+        }
+        td:nth-child(4) {
             opacity: 80%;
+            font-size: 80%;
         }
     }
-    #message-date {
-        font-size: 80%;
-        opacity: 80%;
-    }
+    margin: 20px 0;
 }
