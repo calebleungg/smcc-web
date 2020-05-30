@@ -29,7 +29,7 @@
 					<td> Email </td>
 					<td> Year grad </td>
 					<td> Country </td>
-					<td> Phone </td>
+				<td> Phone </td>
 					<td> Address </td>
 					<td> Password pref </td>
 					<td> </td>
@@ -46,49 +46,49 @@
 							<td> <%= request.address %> </td>
 							<td> <%= request.password_pref %> </td>
 							<td> 
-								<button type="button" class="btn btn-success" data-toggle="modal" data-target="#approveModal<%=request.id%>">
+								<a type="button" data-toggle="modal" data-target="#approveModal<%=request.id%>" id="approve-btn">
 								approve
-								</button> 
-								<%= link_to "decline", decline_request_path(request.id), method: :delete, class:"btn btn-danger" %>
+								</a> 
+								<%= link_to "decline", decline_request_path(request.id), method: :delete, id: "decline-btn"%>
 							</td>
 						</tr>
-					<% end %>
-					<div class="modal fade" id="approveModal<%=request.id%>" tabindex="-1" role="dialog" aria-labelledby="approveModal<%=request.id%>Label" aria-hidden="true">
-						<div class="modal-dialog modal-dialog-centered" role="document">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title" id="exampleModalLabel">Approval for <%= "#{request.first_name} #{request.last_name}"%></h5>
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-									</button>
-								</div>
-								<div class="modal-body" id="user-approval-form">
-									<%= form_with model:@user, url: approve_request_path(request.id), method: :post do |form| %>
-										<%= form.hidden_field :admin, value: false %>
-										<%= form.label :first_name, "First Name" %>
-										<%= form.text_field :first_name, value: request.first_name%><br/>
-										<%= form.label :last_name, "Last Name" %>
-										<%= form.text_field :last_name, value: request.last_name%><br/>
-										<%= form.label :email, "Email" %>
-										<%= form.text_field :email, value: request.email%><br/>
-										<%= form.label :year_grad, "Year Graduated" %>
-										<%= form.text_field :year_grad, value: request.year_graduated%><br/>
-										<%= form.label :phone, "Phone" %>
-										<%= form.text_field :phone, value: request.phone%><br/>
-										<%= form.label :country, "Country" %>
-										<%= form.text_field :phone, value: request.country%><br/>
-										<%= form.label :address, "Address" %>
-										<%= form.text_field :address, value: request.address%><br/><br/>
-										<div>
-										<%= form.label :password, "Enter preferred password" %><br/>
-										<%= form.password_field :password %>
-										</div><br/>
-										<%= form.submit "approve", id:"submit-btn-approve"%>
-									<% end %>
+						<div class="modal fade" id="approveModal<%=request.id%>" tabindex="-1" role="dialog" aria-labelledby="approveModal<%=request.id%>Label" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="approveModal<%=request.id%>Label">Approval for <%= "#{request.first_name} #{request.last_name}"%></h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body" id="user-approval-form">
+										<%= form_with model:@user, url: approve_request_path(request.id), method: :post do |form| %>
+											<%= form.hidden_field :admin, value: false %>
+											<%= form.label :first_name, "First Name" %>
+											<%= form.text_field :first_name, value: request.first_name%><br/>
+											<%= form.label :last_name, "Last Name" %>
+											<%= form.text_field :last_name, value: request.last_name%><br/>
+											<%= form.label :email, "Email" %>
+											<%= form.text_field :email, value: request.email%><br/>
+											<%= form.label :year_grad, "Year Graduated" %>
+											<%= form.text_field :year_grad, value: request.year_graduated%><br/>
+											<%= form.label :phone, "Phone" %>
+											<%= form.text_field :phone, value: request.phone%><br/>
+											<%= form.label :country, "Country" %>
+											<%= form.text_field :phone, value: request.country%><br/>
+											<%= form.label :address, "Address" %>
+											<%= form.text_field :address, value: request.address%><br/><br/>
+											<div>
+											<%= form.label :password, "Enter preferred password (must be 8 characters or more)" %><br/>
+											<%= form.password_field :password %>
+											</div><br/>
+											<%= form.submit "approve", id:"submit-btn-approve"%>
+										<% end %>
+									</div>
 								</div>
 							</div>
-						</div>
-					</div>  
+						</div>  
+					<% end %>
 				<% else %>
 					<tr>
 						<td> No Pending Applications </td>
