@@ -34,7 +34,7 @@
             <%= link_to album_path(album.id) do %>
                 <div class="index-album-box">
                     <p> <strong> <%= album.title %> </strong> </p>
-                    <%= image_tag album.photos[0].image, id:"cover-img"%> 
+                    <%= image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg", id:"cover-img"%> 
                 </div>
             <% end %>
         <% end %>
