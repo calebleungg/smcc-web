@@ -134,7 +134,7 @@
                 <%= link_to album_path(album.id) do %>
                     <div class="album-item">
                         <strong> <p> <%= album.title %> </p> </strong>
-                        <%= image_tag image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg" %>
+                        <%= image_tag album.photos.length > 0 ? album.photos[0].image : "school-logo.jpg" %>
                     </div>
                 <% end %>
             <% end %>
