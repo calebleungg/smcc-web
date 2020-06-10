@@ -391,11 +391,13 @@
     .album-title-section {
         display: flex;
         flex-direction: row;
-        .btn {
+        a {
             margin-left: 20px;
-            width: 120px;
-            height: 40px;
-            // margin-top: 8px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: green;
+            color: white;
+            cursor: pointer;
         }
         margin-bottom: 20px;
     }
@@ -830,5 +832,6 @@
 }
 
 #approve-btn {
-    color: green
+    color: green;
+    margin-right: 10px;
 }

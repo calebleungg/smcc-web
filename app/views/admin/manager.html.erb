@@ -29,7 +29,7 @@
 					<td> Email </td>
 					<td> Year grad </td>
 					<td> Country </td>
-				<td> Phone </td>
+					<td> Phone </td>
 					<td> Address </td>
 					<td> Password pref </td>
 					<td> </td>
@@ -82,7 +82,7 @@
 											<%= form.label :password, "Enter preferred password (must be 8 characters or more)" %><br/>
 											<%= form.password_field :password %>
 											</div><br/>
-											<%= form.submit "approve", id:"submit-btn-approve"%>
+											<%= form.submit "approve", id:"submit-btn-approve"%> 
 										<% end %>
 									</div>
 								</div>
@@ -132,9 +132,9 @@
 		<div class="album-manager-container">
 			<div class="album-title-section">
 				<span> <strong> Home Page Info-Sections </strong></span>
-				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+				<a data-toggle="modal" data-target="#exampleModal">
 				Create Album
-				</button>
+				</a>
 			</div>
 			<div class="album-list">
 				<% for album in @albums %>
