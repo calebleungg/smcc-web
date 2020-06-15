@@ -44,8 +44,8 @@ export default class Navbar extends Component {
                 <Link to="/"><img src={schoolLogo} alt="smcc lgoo" id="home-btn"></img></Link> 
                 <div>
                     <Link to="/upload"> <button> Upload </button> </Link> 
-                    <button>Contact Us </button>
-                    <button>Member Application </button>
+                    <Link to="/"> <button>Contact Us </button> </Link> 
+                    <Link to="/"> <button>Member Application </button></Link>
                     {
                         this.state.user.role === 'admin' ? 
                             <Link to="/admin"> <button id="admin-btn"> Admin </button> </Link>
@@ -54,13 +54,13 @@ export default class Navbar extends Component {
                     }
                     {
                         this.state.isLoggedIn ? 
-                            <button onClick={this.handleLogout} id="auth-btn"> Log out </button>
+                            <Link to="/"> <button onClick={this.handleLogout} id="auth-btn"> Log out </button> </Link> 
                             :
                             <Link to="/login"> <button id="auth-btn">Login </button> </Link>
                     }
                     {
                         this.state.isLoggedIn ? 
-                            <button id="profile-btn"> <img src={avatar} ></img> </button>
+                            <Link to="/"> <button id="profile-btn"> <img src={avatar} ></img> </button> </Link> 
                             :
                             null
                     }

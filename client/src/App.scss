@@ -23,6 +23,7 @@ button {
     &:focus {
         outline: none;
     }
+    font-family: 'Montserrat', sans-serif;
 }
 
 // ----------------------------------------------------------------------
@@ -58,6 +59,7 @@ button {
         background-color: transparent;
         color: white;
         font-weight: 700;
+        height: 100%;
     }
     #admin-btn {
         background-color: #1DB954;
@@ -160,9 +162,6 @@ button {
     }
 }
 
-#upload-container {
-    padding-top: 8vh;
-}
 
 
 // ----------------------------------------------------------------------
@@ -215,4 +214,146 @@ button {
 
 #admin-container {
     padding-top: 8vh;
+    height: 92vh;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    #admin-side-panel {
+        height: 92vh;
+        width: 250px;
+        text-align: center;
+        p {
+            font-weight: 700;
+        }
+        border-right: 1px solid lightgrey;
+        #panel-options {
+            display: flex;
+            flex-direction: column;
+            margin-top: 50px;
+            button {
+                text-align: left;
+                font-size: 1em;
+                padding: 15px 20px;
+                font-weight: 400;
+            }
+        }
+    }
+    #admin-content-div {
+        width: 100%;
+        height: 92vh;
+        overflow-x: hidden;
+
+        #dash-album-container {
+            display: flex;
+            flex-direction: row;;
+            height: 100%;
+            #expanded-view {
+                display: flex;
+                flex-direction: row;
+                vertical-align: top;
+                #expanded-photo {
+                    height: 85vh;
+                    width: auto;
+                }
+                div {
+                    padding-top: 10vh;
+                    margin-left: 10px;
+                    width: 500px;
+                }
+                i {
+                    font-size: 2em;
+                    padding: 20px;
+                    cursor: pointer;
+                }
+            }
+            #dash-album-left {
+                p {
+                    padding-left: 20px;
+                }
+                width: 250px;
+                border-right: 1px solid lightgrey;
+                #album-list {
+                    display: flex;
+                    flex-direction: column;
+                    button {
+                        text-align: left;
+                        padding: 20px 30px;
+                    }
+                }
+            }
+            #dash-album-right {
+                width: 100%;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-content: flex-start;
+                padding: 20px;
+                overflow: auto;
+                #add-photo-btn {
+                    font-size: 2em;
+                    color: #1DB954;
+                    cursor: pointer;
+                    padding: 10px;
+                }
+                img {
+                    margin: 10px;
+                    height: 220px;
+                    width: 220px;
+                    border-radius: 5px;
+                    object-fit: cover;
+                    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+                                0 6.7px 5.3px rgba(0, 0, 0, 0.048);
+                    cursor: pointer;
+                }
+                #upload-container {
+                    min-width: 100%;
+                    height: 50px;
+                    padding: 5px;
+                    #add-title {
+                        font-weight: 600;
+                        font-size: 1.2em;
+                    }
+                    input {
+                        font-size: 1em;
+                        margin: 20px 0;
+                        &:focus {
+                            outline: none;
+                        }
+                    }
+                    #file-select-input {
+                        background-color: white;
+                        border-bottom: 1px solid lightgrey;
+                        padding-bottom: 10px;
+                        width: 400px;
+                        cursor: pointer;
+                    }
+                    button {
+                        font-weight: 700;
+                        color: white;
+                        background-color: #1DB954;
+                        font-size: 1em;
+                        padding: 5px 10px;
+                    }
+                    #photo-comment-input {
+                        padding: 10px;
+                        width: 400px;
+                        height: 100px;
+                        border: 1px solid lightgrey;
+                        border-radius: 5px;
+                        margin-top: 5px;
+                        font-family: "Montserrat", sans-serif;
+                    }
+                    #error-flash {
+                        font-size: 0.8em;
+                        color: red;
+                    }
+                    #success-flaash {
+                        font-size: 0.8em;
+                        color: #1DB954;
+                    }
+                }
+            }
+        }
+    }
 }

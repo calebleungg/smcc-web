@@ -6,7 +6,9 @@ export default class UploadPhoto extends Component {
 
     state = {
         file: null,
-        comment: ''
+        comment: '',
+        albumId: this.props.id,
+        isUploading: false
     }
  
     onFileChange = (event) => {
@@ -17,6 +19,9 @@ export default class UploadPhoto extends Component {
     
 
     onUpload = () => {
+        this.setState({
+            isUploading: true
+        })
 
         const file = this.state.file
         console.log(this.state.comment)
@@ -24,18 +29,33 @@ export default class UploadPhoto extends Component {
         const formData = new FormData()
         formData.append('upload_preset', 'trt9vcvh')
         formData.append('file', file)
-            console.log(formData)
+        console.log(formData)
 
         axios.post('https://api.cloudinary.com/v1_1/dpbekfxvh/image/upload', formData)
             .then(response => {
             
                 console.log(response.data)
-                axios.put(`/api/album/upload/5ee74c908bec406274068b29`, {
+                axios.put(`/api/albums/upload/${this.props.id}`, {
                     comment: this.state.comment,
                     url: response.data.secure_url
                 }).then(response => {
                     console.log(response)
-                }).catch(err => console.log(err))
+                    this.setState({
+                        isUploading: false,
+                        success: "image successfully uploaded"
+                    })
+
+                    setTimeout(() => {
+                        window.location.reload(false)
+                    }, 2000)
+
+                }).catch(err => {
+                    console.log(err)
+                    this.setState({
+                        isUploading: false,
+                        error: "Failed to upload photo"
+                    })
+                })
             })
     }
 
@@ -45,29 +65,19 @@ export default class UploadPhoto extends Component {
             [name]: value
         })
     }
-
-    getBase64(e) {
-        let file = e.target.files[0]
-        let reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = () => {
-          this.setState({
-            imgUpload: reader.result
-          })
-        };
-        reader.onerror = function (error) {
-          console.log('Error: ', error);
-        }
-      }
     
 
     render(){
 
         return (
             <div id="upload-container">
-                <input name="photo" type="file" onChange={this.onFileChange} />
-                <textarea name="comment" value={this.state.comment} onChange={this.handleInput}></textarea>
-                <button onClick={this.onUpload} > upload </button>
+                <span id="add-title"> Add photo: </span><br/>
+                <input id="file-select-input" name="photo" type="file" onChange={this.onFileChange} /> <br/>
+                <textarea name="comment" id="photo-comment-input" placeholder="Enter a comment" value={this.state.comment} onChange={this.handleInput} /><br/>
+                <button onClick={this.onUpload} > upload </button><br/>
+                <span> {this.state.isUploading ? "uploading..." : null} </span>
+                <span style={{color: "red"}}> {this.state.error ? this.state.error : null} </span>
+                <span style={{color: "#1DB954"}}> {this.state.success ? this.state.success : null} </span>
             </div>
         )
     }
