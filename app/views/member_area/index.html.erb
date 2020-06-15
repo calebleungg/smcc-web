@@ -134,11 +134,7 @@
                 <%= link_to album_path(album.id) do %>
                     <div class="album-item">
                         <strong> <p> <%= album.title %> </p> </strong>
-                        <% if album.photos.length > 0 %>
-                            <%= image_tag album.photos[0].image  %>
-                        <% else %>
-                            <%= image_tag "school-logo.jpg"  %>
-                        <% end %>
+                        
                     </div>
                 <% end %>
             <% end %>
