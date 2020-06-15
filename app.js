@@ -5,8 +5,13 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require("passport")
 const MongoStore = require('connect-mongo')(session);
-const authRouter = require('./routes/auth_routes')
 const path = require('path')
+const fileUpload = require('express-fileupload')
+
+// route imports
+const authRouter = require('./routes/auth_routes')
+const pageContentRouter = require('./routes/page_content_routes')
+const albumRouter = require('./routes/album_routes')
 
 
 // initiating server
@@ -14,10 +19,17 @@ const port = 3005;
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use(fileUpload({
+    useTempFiles: true
+}))
+
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 
 // Connecting to mongodb database
-const dbConn = 'mongodb://localhost/app_template_test'
+const dbConn = process.env.MONGODB_URI
 mongoose.connect(dbConn, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
@@ -52,7 +64,16 @@ app.use(passport.session())
 
 
 // Routes
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/content', pageContentRouter);
+app.use('/api/albums', albumRouter);
+
+app.get('/test', (req, res) => {
+    console.log(req.files)
+    res.send('hello')
+})
+
+
 
 
 // Deployment redirect to static assets
