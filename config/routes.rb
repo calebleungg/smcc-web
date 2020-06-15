@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get "/member-request/new", to: "request#new", as: "new_request"
   get "/member-request/confirmation", to: "request#confirm", as: "confirm_request"
   post "/member-request/create", to: "request#create", as: "create_request"
-  post "/member-request/:id/approve", to: "admin#approve", as: "approve_request"
+  post "/request/approve/:id", to: "admin#approve", as: "approve_request"
   delete "/member-request/decline/:id", to: "admin#decline", as: "decline_request"
 
   patch "/photo/:id/move-up", to: "photo#move_up", as: "move_up"

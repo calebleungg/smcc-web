@@ -63,7 +63,6 @@
 									</div>
 									<div class="modal-body" id="user-approval-form">
 										<%= form_with model:@user, url: approve_request_path(request.id), method: :post do |form| %>
-											<%= form.hidden_field :admin, value: false %>
 											<%= form.label :first_name, "First Name" %>
 											<%= form.text_field :first_name, value: request.first_name%><br/>
 											<%= form.label :last_name, "Last Name" %>
