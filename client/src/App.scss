@@ -40,10 +40,15 @@ button {
     background-color: $main-color;
     position: fixed;
     width: 100vw;
+    div {
+        display: flex;
+        flex-direction: row;
+        margin-right: 2vw;
+    }
     #home-btn { 
         margin: 0 20px;
-        height: 70px;
-        width: 70px;
+        height: 60px;
+        width: 60px;
         border-radius: 100%;
         cursor: pointer;
     }
@@ -53,11 +58,17 @@ button {
         background-color: transparent;
         color: white;
         font-weight: 700;
-        &:nth-child(2) {
-            margin-right: 30px;
-        }
-        &:nth-child(3) {
-            margin-right: 30px;
+    }
+    #admin-btn {
+        background-color: #1DB954;
+        color: white;
+        font-weight: 700;
+    }
+    #profile-btn {
+        img {
+            height: 60px;
+            width: 60px;
+            border-radius: 100%;
         }
     }
 }
@@ -150,5 +161,58 @@ button {
 }
 
 #upload-container {
+    padding-top: 8vh;
+}
+
+
+// ----------------------------------------------------------------------
+// ------------------ LOGIN PAGE ----------------------------------------
+// ----------------------------------------------------------------------
+
+#login-page-container {
+    padding-top: 8vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    // background-color: #f0f0f0;
+    img {
+        width: 200px;
+        height: 200px;
+        margin-right: 20px;
+    }
+    input {
+        padding: 10px 20px;
+        font-size: 1em;
+        width: 300px;
+        // font-weight: 600;
+        border: 1px solid lightgrey;
+        border-radius: 2px;
+        margin: 10px 0;
+        &:focus {
+            outline: none
+        }
+    }
+    span {
+        color: red;
+        font-size: 0.9em;
+    }
+    button {
+        font-size: 1em;
+        font-weight: 700;
+        // margin: 10px 0;
+        border: none;
+        padding: 10px 15px;
+        background-color: #1DB954;
+        color: white
+    }
+}
+
+// ----------------------------------------------------------------------
+// ------------------ ADMIN PAGE ----------------------------------------
+// ----------------------------------------------------------------------
+
+#admin-container {
     padding-top: 8vh;
 }

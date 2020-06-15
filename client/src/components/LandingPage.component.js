@@ -12,7 +12,8 @@ export default class LandingPage extends Component {
        sectionTwo: {},
        isLoading: true,
        albumList: [],
-       displayCounter: []
+       isLoggedIn: false,
+       user: {}
     }
 
     componentDidMount() {
@@ -46,6 +47,7 @@ export default class LandingPage extends Component {
                     albumList: albums
                 })
             })
+    
     }
 
     getAlbumCounter = (id) => {
