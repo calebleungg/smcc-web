@@ -39,6 +39,18 @@ const createAlbum = (req, res) => {
         })
 }
 
+const deleteAlbumById = (req, res) => {
+    Album.findByIdAndDelete(req.params.id)
+        .then(response => {
+            console.log(response)
+            res.send('successfully deleted')
+        })
+        .catch(err => {
+            console.log(err)
+            res.send(err)
+        })
+}
+
 const uploadPhoto = (req, res) => {
 
     const { comment, url } = req.body
@@ -71,4 +83,4 @@ const adminFix = (req, res) => {
     res.send('fixing')
 }
 
-module.exports = { uploadPhoto, getAlbums, getAlbumById, createAlbum, getPublicAlbums, adminFix }
+module.exports = { uploadPhoto, getAlbums, getAlbumById, createAlbum, getPublicAlbums, adminFix, deleteAlbumById }

@@ -54,7 +54,7 @@ button {
         cursor: pointer;
     }
     button {
-        font-size: 1.2em;
+        font-size: 1em;
         margin: 0 10px;
         background-color: transparent;
         color: white;
@@ -244,6 +244,11 @@ button {
         height: 92vh;
         overflow-x: hidden;
 
+
+        //  ---------------------------------------------
+        //  --------------- ALBUM MANAGER ---------------
+        //  ---------------------------------------------
+
         #dash-album-container {
             display: flex;
             flex-direction: row;;
@@ -259,7 +264,9 @@ button {
                 div {
                     padding-top: 10vh;
                     margin-left: 10px;
-                    width: 500px;
+                    p {
+                        width: 300px;
+                    }
                 }
                 i {
                     font-size: 2em;
@@ -268,17 +275,61 @@ button {
                 }
             }
             #dash-album-left {
+                #album-create-input {
+                    padding-left: 20px;
+                    input {
+                        padding: 10px 5px;
+                        font-size: 0.9em;
+                        border: 1px solid lightgrey;
+                    }
+                    button {
+                        margin-top: 10px;
+                        background-color: #1DB954;
+                        color: white;
+                        font-weight: 600;
+                        padding: 5px 10px;
+                    }
+                    padding-bottom: 20px;
+                    border-bottom: 1px solid lightgrey;
+                }
                 p {
                     padding-left: 20px;
                 }
-                width: 250px;
+                width: 300px;
                 border-right: 1px solid lightgrey;
                 #album-list {
                     display: flex;
                     flex-direction: column;
+                    div {
+                        display: flex;
+                        flex-direction: column;
+                        width: 100%;
+                    }
                     button {
+                        display: flex;
+                        justify-content: space-between;
                         text-align: left;
                         padding: 20px 30px;
+                        i {
+                            color: #a31010;
+                            margin-left: 10px;
+                        }
+                    }
+                    #confirm-div {
+                        display: flex;
+                        flex-direction: row;
+                        button {
+                            font-weight: 700;
+                        }
+                    }
+                    #confirm-delete-btn {
+                        background-color: #a31010;
+                        color: white;
+                        width: 70%;
+                    }
+                    #confirm-keep-btn {
+                        background-color: #1DB954;
+                        color: white;
                     }
                 }
             }
@@ -298,8 +349,8 @@ button {
                 }
                 img {
                     margin: 10px;
-                    height: 220px;
-                    width: 220px;
+                    height: 210px;
+                    width: 210px;
                     border-radius: 5px;
                     object-fit: cover;
                     box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),

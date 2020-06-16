@@ -43,7 +43,6 @@ export default class Navbar extends Component {
             <nav id="top-navigation-bar">
                 <Link to="/"><img src={schoolLogo} alt="smcc lgoo" id="home-btn"></img></Link> 
                 <div>
-                    <Link to="/upload"> <button> Upload </button> </Link> 
                     <Link to="/"> <button>Contact Us </button> </Link> 
                     <Link to="/"> <button>Member Application </button></Link>
                     {
