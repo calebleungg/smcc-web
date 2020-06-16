@@ -33,6 +33,10 @@ const User = new Schema({
     blocked: {
         type: Boolean,
         default: false
+    },
+    avatar: {
+        url: String,
+        publicId: String
     }
 });
 

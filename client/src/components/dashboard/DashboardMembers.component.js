@@ -53,6 +53,11 @@ export default class DashboardMembers extends Component {
 
     renderPending = (category) => {
         let output = []
+        if (this.state[category].length === 0 && category === 'pending') {
+            return (
+                <p id="no-requests"> No new requests </p>
+            )
+        }
         this.state[category].map( request => {
             output.push(
                 <div id="pending-item" onClick={() => {this.setState({userViewing: request})}}>

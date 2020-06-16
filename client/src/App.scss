@@ -26,6 +26,11 @@ button {
     font-family: 'Montserrat', sans-serif;
 }
 
+.loading-gif {
+    height: 40px;
+    width: 40px;
+    padding: 20px;
+}
 // ----------------------------------------------------------------------
 // ------------------ TOP NAVIGATION ------------------------------------
 // ----------------------------------------------------------------------
@@ -70,6 +75,7 @@ button {
         img {
             height: 60px;
             width: 60px;
+            object-fit: cover;
             border-radius: 100%;
         }
     }
@@ -293,6 +299,12 @@ button {
                 min-height: 92vh;
                 width: 300px;
                 border-right: 1px solid lightgrey;
+                #no-requests {
+                    font-weight: 500;
+                    padding-top: 20px;
+                    width: 100%;
+                    text-align: center;
+                }
 
                 
                 #pending-item {
@@ -573,10 +585,7 @@ button {
                     min-width: 100%;
                     height: 50px;
                     padding: 5px;
-                    #loading-gif {
-                        height: 50px;
-                        width: 50px;
-                    }
+                
                     #add-title {
                         font-weight: 600;
                         font-size: 1.2em;
@@ -673,6 +682,70 @@ button {
             font-weight: 700;
             color: white;
             background-color: #1DB954;
+        }
+        #flash {
+            font-size: 0.8em;
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// ------------------ PROFILE PAGE --------------------------------------
+// ----------------------------------------------------------------------
+
+#profile-page-container {
+    padding-top: 15vh;
+    height: 85vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    #avatar-div {
+        margin-right: 50px;
+        img {
+            width: 300px;
+            height: 300px;
+            border-radius: 100%;
+            object-fit: cover;
+        }
+        input {
+            padding: 10px;
+            border: 1px solid lightgrey;
+            cursor: pointer;
+            margin-top: 10px;
+            font-family: 'Montserrat', 'sans-serif';
+        }
+        button {
+            color: white;
+            background-color: #1DB954;
+            padding: 10px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+    }
+    #request-form {
+        span {
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        input {
+            padding: 10px;
+            width: 30vw;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', 'sans-serif';
+            border: 1px solid lightgrey;
+        }
+        button {
+            padding: 10px;
+            font-weight: 700;
+            color: white;
+        }
+        #approve-btn {
+            background-color: #1DB954;
+            margin-right: 20px;
+        }
+        #decline-btn {
+            background-color: #a31010;
         }
         #flash {
             font-size: 0.8em;

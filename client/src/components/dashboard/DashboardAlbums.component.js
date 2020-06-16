@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import Axios from 'axios'
 import UploadPhoto from '../UploadPhoto.component'
+import loadingGif from '../../assets/images/loading.gif'
 
 export default class DashboardAlbums extends Component {
 
@@ -350,7 +351,7 @@ export default class DashboardAlbums extends Component {
 
         if (this.state.isLoading) {
             return (
-                <p> loading... </p>
+                <img className="loading-gif" src={loadingGif} /> 
             )
         }
 

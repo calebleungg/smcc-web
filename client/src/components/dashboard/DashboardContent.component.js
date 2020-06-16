@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import loadingGif from '../../assets/images/loading.gif'
 
 export default class DashboardContent extends Component {
 
     state = {
         contents: [],
-        flashMessage: null
+        flashMessage: null,
+        isLoading: true
     }
 
     componentDidMount() {
@@ -22,6 +24,7 @@ export default class DashboardContent extends Component {
                     })
                 })
                 this.setState({
+                    isLoading: false,
                     contents: sections
                 })
             })
@@ -105,6 +108,12 @@ export default class DashboardContent extends Component {
 
     
     render(){
+
+        if(this.state.isLoading) {
+            return (
+                <img className="loading-gif" src={loadingGif} />
+            )
+        }
 
         return (
             <div id="dash-content-container">

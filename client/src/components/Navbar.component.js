@@ -43,8 +43,26 @@ export default class Navbar extends Component {
             <nav id="top-navigation-bar">
                 <Link to="/"><img src={schoolLogo} alt="smcc lgoo" id="home-btn"></img></Link> 
                 <div>
-                    <Link to="/"> <button>Contact Us </button> </Link> 
-                    <Link to="/request"> <button>Member Application </button></Link>
+                    {
+                        !this.state.isLoggedIn ? 
+                            <Link to="/"> <button>Contact Us </button> </Link> 
+                            :
+                            null
+
+                    }
+                    {
+                        !this.state.isLoggedIn ? 
+                            <Link to="/request"> <button>Member Application </button></Link>
+                            :
+                            null
+
+                    }
+                    {
+                        this.state.isLoggedIn ?
+                            <Link to="/"> <button> Members Area </button> </Link>
+                            :
+                            null
+                    }
                     {
                         this.state.user.role === 'admin' ? 
                             <Link to="/admin"> <button id="admin-btn"> Admin </button> </Link>
@@ -59,7 +77,7 @@ export default class Navbar extends Component {
                     }
                     {
                         this.state.isLoggedIn ? 
-                            <Link to="/"> <button id="profile-btn"> <img src={avatar} ></img> </button> </Link> 
+                            <Link to="/profile"> <button id="profile-btn"> <img src={this.state.user.avatar && this.state.user.avatar.url ? this.state.user.avatar.url : avatar} ></img> </button> </Link> 
                             :
                             null
                     }
