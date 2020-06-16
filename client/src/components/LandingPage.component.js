@@ -98,8 +98,10 @@ export default class LandingPage extends Component {
             } else {
                 output.push(
                     <div className="landing-album-item">
-                        <img src={logo}> </img>
-                        <p> {album.name} </p>
+                        <div>
+                            <img src={logo} alt="album display" /> 
+                            <p> {album.name} </p>
+                        </div>
                     </div>
                 )
             }
@@ -136,7 +138,7 @@ export default class LandingPage extends Component {
                         null
                 }
                 <div id="landing-album-list">
-                    <p> Down memory lane... </p>
+                    {this.state.albumList.length > 0 ? <p> Down memory lane... </p> : null }
                     <div>
                         {
                             this.state.albumList.length > 0 ? 

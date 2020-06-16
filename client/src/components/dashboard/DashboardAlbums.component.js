@@ -12,11 +12,17 @@ export default class DashboardAlbums extends Component {
         expandViewUrl: '',
         expandedComments: '',
         expandedView: false,
+        expandedPhotoId: '',
+        expandedAlbum: '',
         addPhoto: false,
         albumToAdd: '',
         newAlbum: '',
         reRenderAlbums: false,
-        backToAlbumId: null
+        backToAlbumId: null,
+        albumName: '',
+        albumDesc: '',
+        albumId: '',
+        flashMessage: null
     }
 
     componentDidMount() {
@@ -43,18 +49,24 @@ export default class DashboardAlbums extends Component {
                 this.setState({
                     albumList: list,
                     isLoading: false,
-                    backToAlbumId: null
+                    backToAlbumId: null,
                 })
             })
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(this.state.backToAlbumId)
         if (this.state.reRenderAlbums) {
             this.getApiAlbums()
             this.setState({
                 reRenderAlbums: false
             })
+        }
+        if (this.state.flashMessage) {
+            setTimeout(() => {
+                this.setState({
+                    flashMessage: null
+                })
+            }, 2000)
         }
     }
 
@@ -67,6 +79,12 @@ export default class DashboardAlbums extends Component {
         for(let i = 0; i < albums.length; i++) {
             if (albums[i]._id === id) {
                 albums[i].isViewing = true
+                this.setState({
+                    albumName: albums[i].name,
+                    albumDesc: albums[i].description ? albums[i].description : '',
+                    albumStatus: albums[i].public,
+                    albumId: albums[i]._id
+                })
             }
         }
         this.setState({
@@ -140,19 +158,24 @@ export default class DashboardAlbums extends Component {
         return output
     }
 
-    expandPhoto = (url, comments) => {
+    expandPhoto = (url, comments, publicId, album) => {
         this.setState({
             expandedView: true,
             expandedComments: comments,
-            expandViewUrl: url
+            expandViewUrl: url,
+            expandedPhotoId: publicId,
+            expandedAlbum: album,
         })
+        console.log(this.state.albumToAdd)
     }
 
     collapsePhoto = () => {
         this.setState({
             expandedView: false,
             expandedComments: '',
-            expandViewUrl: ''
+            expandViewUrl: '',
+            expandedPhotoId: '',
+            expandedAlbum: ''
         })
     }
 
@@ -173,6 +196,24 @@ export default class DashboardAlbums extends Component {
             .catch(err => console.log(err))
     }
 
+    handleUpdateAlbum = (id) => {
+
+        const req = {
+            name: this.state.albumName,
+            description: this.state.albumDesc
+        }
+        Axios.put(`/api/albums/update/${id}`, req)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    reRenderAlbums: true,
+                    backToAlbumId: id,
+                    flashMessage: 'saved updates'
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
     renderAlbumPhotos = () => {
         let output = []
         for (let album of this.state.albumList) {
@@ -181,13 +222,36 @@ export default class DashboardAlbums extends Component {
                     output.push(
                         <div id="image-item">
                             <i class="fas fa-times-circle"  onClick={() => this.deleteSinglePhoto(album._id, photo.publicId)}></i>
-                            <img src={photo.url} onClick={() => {this.expandPhoto(photo.url, photo.comment)}} />
+                            <img src={photo.url} onClick={() => {this.expandPhoto(photo.url, photo.comment, photo.publicId, album._id)}} />
                         </div>
                     ) 
                 })
                 return (
-                    <div>
+                    <div id="album-display-container">
+                        {this.state.flashMessage ? <span id="saving-span"> {this.state.flashMessage} </span> : null} <br/>
                         {this.state.isDeleting ? <span id="deleting-span"> deleting... </span> : null} <br/>
+                        <input 
+                            id="album-name" 
+                            type="text" 
+                            value={this.state.albumName} 
+                            name="albumName" 
+                            onChange={this.handleChange} 
+                        /> 
+                        <button id="update-btn" onClick={() => this.handleUpdateAlbum(album._id)}> update </button> 
+                        { 
+                            album.public ? 
+                                <button id="public-btn"  onClick={this.changePublicStatus} > public </button>  
+                                : 
+                                <button id="private-btn" onClick={this.changePublicStatus}> private </button> 
+                        } <br/>
+                        <textarea 
+                            id="album-desc" 
+                            type="text" 
+                            value={this.state.albumDesc} 
+                            placeholder="Enter description" 
+                            name="albumDesc" 
+                            onChange={this.handleChange} 
+                        /> <br/>
                         <i class="fas fa-plus-circle" id="add-photo-btn" onClick={() => {this.setState({addPhoto: true, albumToAdd: album._id})}}></i>
                         <div id="image-wrapper">
                             {output}
@@ -232,7 +296,53 @@ export default class DashboardAlbums extends Component {
     }
 
     handleUpload = () => {
-        this.viewAlbum(this.state.albumToAdd)
+        this.setState({
+            reRenderAlbums: true,
+            backToAlbumId: this.state.albumId,
+            addPhoto: false
+        })
+        // this.getApiAlbums()
+    }
+
+    handleUpdatePhoto = () => {
+
+        console.log(this.state.expandedComments)
+        const id = this.state.expandedPhotoId.split('/')[1]
+        console.log(id)
+
+        const req = {
+            comment: this.state.expandedComments
+        }
+
+        Axios.put(`/api/albums/update-photo/${id}`, req)
+            .then(response => {
+                this.setState({
+                    reRenderAlbums: true,
+                    backToAlbumId: this.state.expandedAlbum,
+                    flashMessage: 'saved updates'
+                })
+                console.log(response)
+            })
+            .catch(err => console.log(err))
+    }
+
+    changePublicStatus = () => {
+        const req =  {
+            status: !this.state.albumStatus
+        }
+
+        Axios.put(`/api/albums/change-public/${this.state.albumId}`, req)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    reRenderAlbums: true,
+                    backToAlbumId: this.state.albumId,
+                    flashMessage: this.state.albumStatus ? "successfully made private" : "successfully made public",
+                    albumStatus: !this.state.albumStatus
+                })
+            })
+            .catch(err => console.log(err))
+        
     }
 
     
@@ -280,7 +390,14 @@ export default class DashboardAlbums extends Component {
                                     <img id="expanded-photo" src={this.state.expandViewUrl} />
                                     <div>
                                         <span> <strong> Comment </strong> </span><br/>
-                                        <p> {this.state.expandedComments} </p>
+                                        <textarea
+                                            type="text"
+                                            value={this.state.expandedComments}
+                                            name="expandedComments"
+                                            onChange={this.handleChange}
+                                        /> <br/>
+                                        <button onClick={this.handleUpdatePhoto} > update </button><br/>
+                                        {this.state.flashMessage ? <span id="saving-span"> {this.state.flashMessage} </span> : null} <br/>
                                     </div>
                                 </div>
                             :                           

@@ -63,8 +63,6 @@ const deletePhotoById = (req, res) => {
         console.log(err)
         res.send(err)
     })
-
-  
     
 }
 
@@ -121,6 +119,46 @@ const uploadPhoto = (req, res) => {
         })
 } 
 
+const updateAlbum = (req, res) => {
+    const { name, description } = req.body
+    Album.findByIdAndUpdate(req.params.id, {name: name, description: description}, {new: true})
+        .then(response =>{
+            console.log(response)
+            res.send(response)
+        })
+        .catch(err => {
+            console.log(err)
+            res.send(err)
+        })
+}
+
+const updatePhoto = (req, res) => {
+    const id = 'smcc/' + req.params.id
+    Album.updateOne(
+        { "photos.publicId": id },
+        { $set : { "photos.$.comment": req.body.comment } }
+    ).then(response => {
+        console.log(response)
+        res.send(response)
+    })
+    .catch(err => {
+        console.log(err)
+        res.send(err)
+    })
+}
+
+const changePublic = (req, res) => {
+    const { status } = req.body
+
+    Album.findByIdAndUpdate(req.params.id, {public: status}, {new: true})
+        .then(response => {
+            console.log(response)
+            res.send(response)
+        })
+        .catch(err => res.send(err))
+
+}
+
 const adminFix = (req, res) => {
     cloudinary.api.resources(
         { type: 'upload', max_results: 50 }, 
@@ -169,4 +207,4 @@ const adminFix = (req, res) => {
 
 }
 
-module.exports = { uploadPhoto, getAlbums, getAlbumById, createAlbum, getPublicAlbums, adminFix, deleteAlbumById, deletePhotoById }
+module.exports = { uploadPhoto, getAlbums, getAlbumById, createAlbum, getPublicAlbums, adminFix, deleteAlbumById, deletePhotoById, updateAlbum, updatePhoto, changePublic }

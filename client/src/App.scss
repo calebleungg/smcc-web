@@ -257,15 +257,30 @@ button {
                 display: flex;
                 flex-direction: row;
                 vertical-align: top;
+                #saving-span {
+                    font-size: 0.8em;
+                }
                 #expanded-photo {
                     height: 85vh;
                     width: auto;
                 }
+                textarea {
+                    margin-top: 20px;
+                    padding: 10px;
+                    font-size:0.9em;
+                    width: 300px;
+                    font-family: 'Montserrat', 'sans-serif';
+                    height: 100px;
+                    margin-right: 50px;
+                }
                 div {
                     padding-top: 10vh;
                     margin-left: 10px;
-                    p {
-                        width: 300px;
+                    button {
+                        color: white;
+                        background-color: #1DB954;
+                        padding: 10px;
+                        font-weight: 700;
                     }
                 }
                 i {
@@ -282,6 +297,7 @@ button {
                         font-size: 0.9em;
                         border: 1px solid lightgrey;
                         min-width: 85%;
+                        font-family: "Montserrat", 'sans-serif';
                     }
                     button {
                         margin-top: 10px;
@@ -341,6 +357,45 @@ button {
                 align-content: flex-start;
                 padding: 20px;
                 overflow: auto;
+                #album-display-container {
+                    #update-btn {
+                        color: white;
+                        font-weight: 700;
+                        background-color: #1DB954;
+                        padding: 10px;
+                        margin-left: 20px;
+                    }
+                    #public-btn {
+                        color: white;
+                        font-weight: 700;
+                        background-color: #1DB954;
+                        padding: 10px;
+                        margin-left: 20px;
+                    }
+                    #private-btn {
+                        color: white;
+                        font-weight: 700;
+                        background-color: #a31010;
+                        padding: 10px;
+                        margin-left: 20px;
+                    }
+                    input, textarea {
+                        font-size: 1em;
+                        width: 300px;
+                        border: 1px solid lightgrey;
+                        padding: 10px;
+                        font-family: "Montserrat", 'sans-serif';
+                    }
+                    textarea {
+                        font-size: 0.9em;
+                        width: 500px;
+                        margin-top: 10px;
+                        height: 80px;
+                    }
+                }
+                #saving-span {
+                    color: #1DB954;
+                }
                 #deleting-span {
                     color: red;
                 }
