@@ -8,13 +8,15 @@ export default class DashboardAlbums extends Component {
     state = {
         albumList: [],
         isLoading: true,
+        isDeleting: false,
         expandViewUrl: '',
         expandedComments: '',
         expandedView: false,
         addPhoto: false,
         albumToAdd: '',
         newAlbum: '',
-        reRenderAlbums: false
+        reRenderAlbums: false,
+        backToAlbumId: null
     }
 
     componentDidMount() {
@@ -24,19 +26,30 @@ export default class DashboardAlbums extends Component {
     getApiAlbums = () => {
         Axios.get('/api/albums')
             .then(response => {
-                const list = response.data
+                let list = response.data
                 list.map(album => {
                     album.isViewing = false
                     album.confirmingDelete = false
                 })
+
+                if (this.state.backToAlbumId) {
+                    for(let i = 0; i < list.length; i++) {
+                        if (list[i]._id === this.state.backToAlbumId) {
+                            list[i].isViewing = true
+                        }
+                    }
+                }
+
                 this.setState({
                     albumList: list,
-                    isLoading: false
+                    isLoading: false,
+                    backToAlbumId: null
                 })
             })
     }
 
     componentDidUpdate(prevProps, prevState) {
+        console.log(this.state.backToAlbumId)
         if (this.state.reRenderAlbums) {
             this.getApiAlbums()
             this.setState({
@@ -143,19 +156,40 @@ export default class DashboardAlbums extends Component {
         })
     }
 
+    deleteSinglePhoto = (album, publicId) => {
+        this.setState({
+            isDeleting: true
+        })
+        const id = publicId.split('/')[1]
+        Axios.delete(`/api/albums/photo/${id}`)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    reRenderAlbums: true,
+                    backToAlbumId: album,
+                    isDeleting: false
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
     renderAlbumPhotos = () => {
         let output = []
         for (let album of this.state.albumList) {
             if (album.isViewing) {
                 album.photos.map(photo => {
                     output.push(
-                        <img src={photo.url} onClick={() => {this.expandPhoto(photo.url, photo.comment)}} />
+                        <div id="image-item">
+                            <i class="fas fa-times-circle"  onClick={() => this.deleteSinglePhoto(album._id, photo.publicId)}></i>
+                            <img src={photo.url} onClick={() => {this.expandPhoto(photo.url, photo.comment)}} />
+                        </div>
                     ) 
                 })
                 return (
                     <div>
+                        {this.state.isDeleting ? <span id="deleting-span"> deleting... </span> : null} <br/>
                         <i class="fas fa-plus-circle" id="add-photo-btn" onClick={() => {this.setState({addPhoto: true, albumToAdd: album._id})}}></i>
-                        <div>
+                        <div id="image-wrapper">
                             {output}
                         </div>
                     </div>
@@ -197,6 +231,10 @@ export default class DashboardAlbums extends Component {
         this.collapseDelete()
     }
 
+    handleUpload = () => {
+        this.viewAlbum(this.state.albumToAdd)
+    }
+
     
     render(){
 
@@ -234,7 +272,7 @@ export default class DashboardAlbums extends Component {
                 <div id="dash-album-right">
                     {
                         this.state.addPhoto ? 
-                            <UploadPhoto id={this.state.albumToAdd} />
+                            <UploadPhoto id={this.state.albumToAdd} handler={this.handleUpload} />
                             :
                             this.state.expandedView ? 
                                 <div id="expanded-view" style={!this.state.expandedView ? {display: "none"} : null}>

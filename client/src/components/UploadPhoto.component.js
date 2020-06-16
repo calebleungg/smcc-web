@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import loadingGif from '../assets/images/loading.gif'
 
 export default class UploadPhoto extends Component {
 
@@ -9,6 +10,10 @@ export default class UploadPhoto extends Component {
         comment: '',
         albumId: this.props.id,
         isUploading: false
+    }
+
+    componentDidMount() {
+        console.log(this.props)
     }
  
     onFileChange = (event) => {
@@ -37,7 +42,8 @@ export default class UploadPhoto extends Component {
                 console.log(response.data)
                 axios.put(`/api/albums/upload/${this.props.id}`, {
                     comment: this.state.comment,
-                    url: response.data.secure_url
+                    url: response.data.secure_url,
+                    publicId: response.data.public_id
                 }).then(response => {
                     console.log(response)
                     this.setState({
@@ -46,8 +52,9 @@ export default class UploadPhoto extends Component {
                     })
 
                     setTimeout(() => {
-                        window.location.reload(false)
-                    }, 2000)
+                        // window.location.reload(false)
+                        this.props.handler()
+                    }, 1500)
 
                 }).catch(err => {
                     console.log(err)
@@ -75,7 +82,7 @@ export default class UploadPhoto extends Component {
                 <input id="file-select-input" name="photo" type="file" onChange={this.onFileChange} /> <br/>
                 <textarea name="comment" id="photo-comment-input" placeholder="Enter a comment" value={this.state.comment} onChange={this.handleInput} /><br/>
                 <button onClick={this.onUpload} > upload </button><br/>
-                <span> {this.state.isUploading ? "uploading..." : null} </span>
+                <span> {this.state.isUploading ? <img id="loading-gif" src={loadingGif} /> : null} </span>
                 <span style={{color: "red"}}> {this.state.error ? this.state.error : null} </span>
                 <span style={{color: "#1DB954"}}> {this.state.success ? this.state.success : null} </span>
             </div>

@@ -7,7 +7,8 @@ const {
     createAlbum, 
     getPublicAlbums,
     adminFix,
-    deleteAlbumById
+    deleteAlbumById,
+    deletePhotoById
 } = require('../controllers/album_controller')
 const { isAdmin } = require('../utils/common_utilities')
 
@@ -21,9 +22,10 @@ router.post('/create', isAdmin, createAlbum)
 router.put('/upload/:id', isAdmin, uploadPhoto)
 
 router.delete('/delete/:id', isAdmin, deleteAlbumById)
+router.delete('/photo/:id', isAdmin, deletePhotoById )
 
 
 
-router.get('/admin', adminFix)
+// router.get('/admin', adminFix)
 
 module.exports = router

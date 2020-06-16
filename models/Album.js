@@ -15,7 +15,8 @@ const Album = new Schema ({
     photos: [
         {
            comment: String,
-           url: String
+           url: String,
+           publicId: String
         }
     ]
 })

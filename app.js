@@ -7,6 +7,8 @@ const passport = require("passport")
 const MongoStore = require('connect-mongo')(session);
 const path = require('path')
 const fileUpload = require('express-fileupload')
+const cloudinary = require('cloudinary').v2;
+
 
 // route imports
 const authRouter = require('./routes/auth_routes')
@@ -44,6 +46,12 @@ mongoose.connect(dbConn, {
     }
 );
 
+cloudinary.config({ 
+    cloud_name: process.env.CLOUD_NAME, 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET 
+});
+
 
 // initialing authentication through passportLocalMongoose
 app.use(session({
@@ -52,7 +60,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 1800000
+        maxAge: 18000000
     },
     store: new MongoStore({
         mongooseConnection: mongoose.connection

@@ -252,7 +252,7 @@ button {
         #dash-album-container {
             display: flex;
             flex-direction: row;;
-            height: 100%;
+            min-height: 100%;
             #expanded-view {
                 display: flex;
                 flex-direction: row;
@@ -281,6 +281,7 @@ button {
                         padding: 10px 5px;
                         font-size: 0.9em;
                         border: 1px solid lightgrey;
+                        min-width: 85%;
                     }
                     button {
                         margin-top: 10px;
@@ -295,7 +296,7 @@ button {
                 p {
                     padding-left: 20px;
                 }
-                width: 300px;
+                min-width: 250px;
                 border-right: 1px solid lightgrey;
                 #album-list {
                     display: flex;
@@ -334,33 +335,60 @@ button {
                 }
             }
             #dash-album-right {
-                width: 100%;
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: flex-start;
                 align-content: flex-start;
                 padding: 20px;
                 overflow: auto;
+                #deleting-span {
+                    color: red;
+                }
+                #image-wrapper {
+                    overflow: auto;
+                    display: flex;
+                    flex-wrap: wrap;
+                    #image-item {
+                        position: relative;
+                        margin: 10px;
+                        img {
+                            height: 210px;
+                            width: 210px;
+                            z-index: 1;
+                            border-radius: 5px;
+                            object-fit: cover;
+                            box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+                                        0 6.7px 5.3px rgba(0, 0, 0, 0.048);
+                            cursor: pointer;
+                        }
+                        i {
+                            background-color: white;
+                            font-size: 1.2em;
+                            color: black;
+                            position: absolute;
+                            top: -5px;
+                            right: -5px;
+                            z-index: 10;
+                            border-radius: 100%;
+                            overflow: hidden;
+                            cursor: pointer;
+                        }
+                    }
+                }
                 #add-photo-btn {
                     font-size: 2em;
                     color: #1DB954;
                     cursor: pointer;
                     padding: 10px;
                 }
-                img {
-                    margin: 10px;
-                    height: 210px;
-                    width: 210px;
-                    border-radius: 5px;
-                    object-fit: cover;
-                    box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-                                0 6.7px 5.3px rgba(0, 0, 0, 0.048);
-                    cursor: pointer;
-                }
                 #upload-container {
                     min-width: 100%;
                     height: 50px;
                     padding: 5px;
+                    #loading-gif {
+                        height: 50px;
+                        width: 50px;
+                    }
                     #add-title {
                         font-weight: 600;
                         font-size: 1.2em;
@@ -374,9 +402,11 @@ button {
                     }
                     #file-select-input {
                         background-color: white;
-                        border-bottom: 1px solid lightgrey;
-                        padding-bottom: 10px;
+                        border: 1px solid lightgrey;
+                        border-radius: 5px;
+                        padding: 10px;
                         width: 400px;
+                        font-family: "Montserrat", sans-serif;
                         cursor: pointer;
                     }
                     button {
@@ -384,7 +414,10 @@ button {
                         color: white;
                         background-color: #1DB954;
                         font-size: 1em;
+                        border-radius: 5px;
+                        margin-top: 10px;
                         padding: 5px 10px;
+                        margin-bottom: 10px;
                     }
                     #photo-comment-input {
                         padding: 10px;
