@@ -5,6 +5,7 @@ import LandingPage from './components/LandingPage.component'
 import UploadPhoto from './components/UploadPhoto.component'
 import LoginPage from './components/LoginPage.component'
 import AdminDashboard from './components/AdminDashboard.component'
+import RequestPage from './components/RequestPage.component'
 
 import './App.scss'
 
@@ -16,6 +17,7 @@ function App() {
 			<Route path="/upload" exact component={UploadPhoto} />
 			<Route path="/login" exact component={LoginPage} />
 			<Route path="/admin" exact component={AdminDashboard} />
+			<Route path="/request" exact component={RequestPage} />
 		</Router>
 	);
 }

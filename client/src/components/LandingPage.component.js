@@ -8,8 +8,7 @@ import axios from 'axios'
 export default class LandingPage extends Component {
 
     state = {
-       sectionOne: {},
-       sectionTwo: {},
+       content: [],
        isLoading: true,
        albumList: [],
        isLoggedIn: false,
@@ -20,20 +19,9 @@ export default class LandingPage extends Component {
         axios.get('/api/content')
             .then(response => {
                 const sections = response.data
-                sections.map(section => {
-                    if (section.name === "History") {
-                        this.setState({
-                            sectionOne: section
-                        })
-                    }
-                    if (section.name === "Let's Connect") {
-                        this.setState({
-                            sectionTwo: section
-                        })
-                    }
-                    this.setState({
-                        isLoading: false
-                    })
+                this.setState({
+                    content: sections,
+                    isLoading: false
                 })
             })
 
@@ -122,14 +110,14 @@ export default class LandingPage extends Component {
                             <div className="landing-content">
                                 <img src={landingOne} alt="school 1967" ></img>
                                 <div>
-                                    <h2> {this.state.sectionOne.name} </h2>
-                                    <p> {this.state.sectionOne.content} </p>
+                                    <h2> {this.state.content[0].name} </h2>
+                                    <p> {this.state.content[0].content} </p>
                                 </div>
                             </div>
                             <div className="landing-content">
                                 <div>
-                                    <h2> {this.state.sectionTwo.name} </h2>
-                                    <p> {this.state.sectionTwo.content} </p>
+                                    <h2> {this.state.content[1].name} </h2>
+                                    <p> {this.state.content[1].content} </p>
                                 </div>
                                 <img src={landingTwo} alt="school 1967" ></img>
                             </div>

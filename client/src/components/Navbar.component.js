@@ -44,7 +44,7 @@ export default class Navbar extends Component {
                 <Link to="/"><img src={schoolLogo} alt="smcc lgoo" id="home-btn"></img></Link> 
                 <div>
                     <Link to="/"> <button>Contact Us </button> </Link> 
-                    <Link to="/"> <button>Member Application </button></Link>
+                    <Link to="/request"> <button>Member Application </button></Link>
                     {
                         this.state.user.role === 'admin' ? 
                             <Link to="/admin"> <button id="admin-btn"> Admin </button> </Link>

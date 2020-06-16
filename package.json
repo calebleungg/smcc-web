@@ -7,7 +7,10 @@
         "test": "mocha",
         "start": "node app.js",
         "dev": "nodemon app.js",
-        "client": "cd client && npm start"
+        "client": "cd client && npm start",
+        "build": "cd client && npm run build",
+        "install-client": "cd client && npm install",
+        "heroku-postbuild": "npm run install-client && npm run build"
     },
     "author": "Caleb, Wilson",
     "license": "ISC",

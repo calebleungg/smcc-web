@@ -14,6 +14,8 @@ const cloudinary = require('cloudinary').v2;
 const authRouter = require('./routes/auth_routes')
 const pageContentRouter = require('./routes/page_content_routes')
 const albumRouter = require('./routes/album_routes')
+const requestRouter = require('./routes/request_routes')
+const userRouter = require('./routes/user_routes')
 
 
 // initiating server
@@ -75,13 +77,8 @@ app.use(passport.session())
 app.use('/api/auth', authRouter);
 app.use('/api/content', pageContentRouter);
 app.use('/api/albums', albumRouter);
-
-app.get('/test', (req, res) => {
-    console.log(req.files)
-    res.send('hello')
-})
-
-
+app.use('/api/requests', requestRouter)
+app.use('/api/users', userRouter)
 
 
 // Deployment redirect to static assets

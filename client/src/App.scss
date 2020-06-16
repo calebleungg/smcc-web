@@ -244,6 +244,139 @@ button {
         height: 92vh;
         overflow-x: hidden;
 
+        //  ---------------------------------------------
+        //  --------------- MEMEMBERS MANAGER -----------
+        //  ---------------------------------------------
+
+        #dash-members-container {
+            // padding: 20px;
+            .col-title {
+                font-weight: 600;
+                margin: 0;
+            }
+            display: flex;
+            flex-direction: row;
+
+            #member-right-col {
+                padding: 50px;
+                #request-form {
+                    span {
+                        font-size: 0.8em;
+                        font-weight: 500;
+                    }
+                    input {
+                        padding: 10px;
+                        width: 30vw;
+                        margin-bottom: 10px;
+                        font-family: 'Montserrat', 'sans-serif';
+                        border: 1px solid lightgrey;
+                    }
+                    button {
+                        padding: 10px;
+                        font-weight: 700;
+                        color: white;
+                    }
+                    #approve-btn {
+                        background-color: #1DB954;
+                        margin-right: 20px;
+                    }
+                    #decline-btn {
+                        background-color: #a31010;
+                    }
+                    #flash {
+                        font-size: 0.8em;
+                    }
+                }
+            }
+
+            #member-left-col {
+                min-height: 92vh;
+                width: 300px;
+                border-right: 1px solid lightgrey;
+
+                
+                #pending-item {
+                    padding: 10px 30px;
+                    #request-name {
+                        font-weight: 500;
+                        font-size: 1em;
+                    }
+                    #request-country {
+                        font-size: 0.8em;
+                    }
+                    #request-email {
+                        font-size: 0.9em;
+                    }
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #f0f0f0;
+                    }
+                }
+                #select-options {
+                    border-bottom: 1px solid lightgrey;
+                    display: flex;
+                    flex-direction: row;
+                    button {
+                        width: 50%;
+                        padding: 20px 0;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                    #num-circle {
+                        margin-left: 5px;
+                        background-color: red;
+                        color: white;
+                        font-weight: 700;
+                        width: 20px;
+                        height: 20px;
+                        border-radius: 100%;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+
+        //  ---------------------------------------------
+        //  --------------- CONTENT MANAGER -------------
+        //  ---------------------------------------------
+
+        #dash-content-container {
+            padding: 20px;
+
+            .content-card {
+                margin: 30px 0;
+                input,textarea {
+                    font-family: "Montserrat", 'sans-serif';
+                    font-size: 1em;
+                    padding: 10px;
+                    width: 300px;
+                }
+                textarea {
+                    // padding: 15px !important;
+                    font-size: 0.9em;
+                    width: 40vw;
+                    height: 200px;
+                    margin-top: 20px;
+                    line-height: 1.5;
+                }
+            }
+
+            button {
+                font-weight: 700;
+                font-size: 1em;
+                background-color: #1DB954;
+                color: white;
+                padding: 10px;
+            }
+            span {
+                color: #1DB954;
+            }
+        }   
+
 
         //  ---------------------------------------------
         //  --------------- ALBUM MANAGER ---------------
@@ -493,6 +626,56 @@ button {
                     }
                 }
             }
+        }
+    }
+}
+
+// ----------------------------------------------------------------------
+// ------------------ REQUEST PAGE --------------------------------------
+// ----------------------------------------------------------------------
+
+#request-page-container {
+    padding-top: 15vh;
+    height: 85vh;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
+    #request-instructions {
+        width: 350px;
+        margin-right: 30px;
+        p {
+            font-weight: 700;
+            font-size: 1.2em;
+            padding-bottom: 20px;
+            margin: 0;
+        }
+        span {
+            font-size: 0.9em; 
+        }
+    }
+
+    #request-form {
+        span {
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+        input {
+            padding: 10px;
+            width: 30vw;
+            margin-bottom: 10px;
+            font-family: 'Montserrat', 'sans-serif';
+            border: 1px solid lightgrey;
+        }
+        button {
+            padding: 10px;
+            font-weight: 700;
+            color: white;
+            background-color: #1DB954;
+        }
+        #flash {
+            font-size: 0.8em;
         }
     }
 }

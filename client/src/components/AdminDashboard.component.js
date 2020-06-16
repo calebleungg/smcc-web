@@ -12,8 +12,8 @@ export default class AdminDashboard extends Component {
         isVerifying: true,
         isAuthenticated: false,
         viewContent: false,
-        viewMembers: false,
-        viewAlbums: true,
+        viewMembers: true,
+        viewAlbums: false,
         viewEvents: false,
     }
 

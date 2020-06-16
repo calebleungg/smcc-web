@@ -25,27 +25,7 @@ const User = new Schema({
         type: String
     },
     address: {
-        streetNumber: {
-            type: String,
-        }, 
-        street: {
-            type: String,
-        },
-        suburb: {
-            type: String,
-        },
-        city: {
-            type: String,
-        },
-        state: {
-            type: String
-        },
-        postcode: {
-            type: String
-        },
-        country: {
-            type: String,
-        },
+        type: String
     },
     role: {
         type: String,
