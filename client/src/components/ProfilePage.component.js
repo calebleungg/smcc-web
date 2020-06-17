@@ -14,7 +14,11 @@ export default class ProfilePage extends Component {
         user: {},
         file: null,
         flash: null,
-        updateProfile: false
+        updateProfile: false,
+        changePassword: false,
+        newPassword: '',
+        confirmPassword: '',
+        oldPassword: ''
     }
 
     componentDidMount() {
@@ -122,6 +126,100 @@ export default class ProfilePage extends Component {
             })
     }
 
+    handleSubmit = () => {
+        console.log(this.state.user)
+        axios.put(`/api/users/update/details/${this.state.user._id}`, this.state.user)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    flash: {
+                        success: true,
+                        message: "profile uploaded successfully"
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                this.setState({
+                    flash: {
+                        success: false,
+                        message: "There was an error saving your updated information."
+                    }
+                })
+            })
+    }
+
+    handlePasswordChange = () => {
+        const status = this.state.changePassword
+        this.setState({
+            changePassword: !status
+        })
+    }
+
+    onSubmitNewPassword = () => {
+        const checkSame = (this.state.newPassword === this.state.confirmPassword)
+        const checkLength = (this.state.newPassword.length > 6)
+        const email = this.state.user.email
+
+        if (checkLength && checkSame) {
+            const req = {
+                email: email,
+                oldPassword: this.state.oldPassword,
+                newPassword: this.state.newPassword
+            }
+
+            axios.put('/api/users/password/change', req)
+                .then(response => {
+                    console.log(response)
+                    if (response.data.name === "IncorrectPasswordError") {
+                        return (
+                            this.setState({
+                                flash: {
+                                    success: false,
+                                    message: "Old password was incorrect"
+                                }
+                            })
+                        )
+                    } 
+                    return (
+                        this.setState({
+                            changePassword: false,
+                            flash:{
+                                success: true,
+                                message: "New password saved"
+                            }
+                        })
+                    )
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.setState({
+                        flash:{
+                            success: false,
+                            message: "Internal error saving your password"
+                        }
+                    })
+                })
+
+        } else {
+            this.setState({
+                flash: {
+                    success: false,
+                    message: "Passwords must be the same. Min characters 6."
+                }
+            })
+        }
+
+    
+    }
+
+    handleInputChange = (event) => {
+        const { name, value } = event.target
+        this.setState({
+            [name]: value
+        })
+    }
+
    
     render(){
 
@@ -142,7 +240,7 @@ export default class ProfilePage extends Component {
             <div id="profile-page-container">
                 <div id="avatar-div">
                     {
-                        this.state.user.avatar.url ?
+                        this.state.user.avatar && this.state.user.avatar.url ?
                             <img src={this.state.user.avatar.url} /> 
                             :
                             <img src={avatarDefault} /> 
@@ -186,6 +284,7 @@ export default class ProfilePage extends Component {
                         name="email"
                         onChange={this.handleChange}                     
                         value={this.state.user.email}
+                        disabled="true"
                     /><br/>
                     <span> Phone </span><br/>
                     <input 
@@ -215,6 +314,23 @@ export default class ProfilePage extends Component {
                         onChange={this.handleChange}                     
                         value={this.state.user.address}
                     /><br/>
+                    <button onClick={this.handleSubmit}> update </button><br/><br/>
+                    <a id="change-password-btn" onClick={this.handlePasswordChange} style={this.state.changePassword ? {color: "red"} : null}> {this.state.changePassword ? "cancel" : "Change password"} </a>
+                    {
+                        this.state.changePassword ?
+                            <div id="password-div">
+                                <span> Old password </span><br/>
+                                <input type="password" name="oldPassword" placeholder="Enter new password" onChange={this.handleInputChange} /><br/>
+                                <span> New password </span><br/>
+                                <input type="password" name="newPassword" placeholder="Enter new password" onChange={this.handleInputChange} /><br/>
+                                <span> Confirm new password </span><br/>
+                                <input type="password" name="confirmPassword" placeholder="Enter new password again" onChange={this.handleInputChange} /><br/>
+                                <button onClick={this.onSubmitNewPassword}> change </button>
+                            </div>
+                            :
+                            null
+
+                    }
                 </div>
                
             </div>

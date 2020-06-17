@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
+import avatarDefault from '../../assets/images/default-pic.png'
 
 export default class DashboardMembers extends Component {
 
@@ -10,10 +11,22 @@ export default class DashboardMembers extends Component {
         pending: [],
         userList: [],
         userViewing: null,
-        updateList: false
+        updateList: false,
+        allowEdit: false,
+        flash: null,
+        resetPasswordInput: '',
+        confirmDelete: false
     }
 
     componentDidUpdate() {
+
+        if(this.state.flash && this.state.flash.success) {
+            setTimeout(() => {
+                this.setState({
+                    flash: null
+                })
+            }, 2000)
+        }
 
         if(this.state.updateList) {
             this.getApiUsers()
@@ -127,16 +140,108 @@ export default class DashboardMembers extends Component {
             .catch(err => console.log(err))
     }
 
+    handleEdit = () => {
+        const status = this.state.allowEdit
+        this.setState({
+            allowEdit: !status
+        })
+    }
+
+    handleInput = (event)  => {
+        const { name, value} = event.target
+        this.setState({
+            [name]: value
+        })
+    }
+
+    adminDeleteUser = () => {
+        if (this.state.confirmDelete) {
+            axios.delete(`/api/users/admin/delete/${this.state.userViewing._id}`)
+                .then(response => {
+                    console.log(response)
+                    this.setState({
+                        confirmDelete: false,
+                        updateList: true
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
+    }
+
+    adminPasswordReset = () => {
+        const req = {
+            email: this.state.userViewing.email,
+            reset: this.state.resetPasswordInput
+        }
+
+        axios.put('/api/users/admin/password-reset', req)
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({
+                        resetPasswordInput: '',
+                        flash:{
+                            success: true,
+                            message: "Password has been reset"
+                        }
+                    })
+                } else {
+                    this.setState({
+                        flash:{
+                            success: false,
+                            message: "Error resetting password"
+                        }
+                    })
+                }
+            })
+            .catch(err => {
+                this.setState({
+                    flash:{
+                        success: false,
+                        message: "Internal error resetting password"
+                    }
+                })
+            })
+    }
+
+    setConfirmDelete = () => {
+        const status = this.state.confirmDelete
+        this.setState({
+            confirmDelete: !status
+        })
+    }
+
     renderUserDetails = () => {
         const list = this.state.viewPending ? this.state.pending : this.state.userList
         for (let user of list) {
             if (user === this.state.userViewing) {
                 return (
                     <div id="request-form">
+                        {
+                            this.state.viewPending ? 
+                                <div>
+                                <a onClick={this.handleEdit} > {!this.state.allowEdit ? "Allow Editing" : "Disable Editing" } </a><br/><br/>
+                                </div>
+                                :
+                                null
+                        }
+
+                        {
+                            this.state.viewCurrent ?
+                                user.avatar && user.avatar.url ?
+                                    <img src={user.avatar.url} />
+                                    :
+                                    <img src={avatarDefault} />
+                                :
+                                null
+                        }
+                        <br/>
                         <span> First name </span><br/>
                         <input 
                             type="text"
                             name="firstName"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             value={this.state.userViewing.firstName}
                             onChange={this.handleChange}                     
                         /><br/>
@@ -144,6 +249,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="lastName"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.lastName}                        
                         /><br/>
@@ -151,6 +257,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="email"
                             name="email"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.email}
                         /><br/>
@@ -158,6 +265,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="phone"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.phone}
                         /><br/>
@@ -165,6 +273,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="yearGraduated"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.yearGraduated}
                         /><br/>
@@ -172,6 +281,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="country"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.country}
                         /><br/>
@@ -179,6 +289,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="address"
+                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.address}
                         /><br/>
@@ -205,6 +316,38 @@ export default class DashboardMembers extends Component {
                                 <div>
                                     <button id="approve-btn" onClick={this.handleApprove}> Approve </button>
                                     <button id="decline-btn" onClick={() => {this.handleDecline(user._id)}}> Decline </button>
+                                </div>
+                                :
+                                null
+                        }
+                        {
+                            this.state.flash ?
+                                <span style={ this.state.flash.success ? {color: "#1DB954"} : {color: "red"} } > {this.state.flash.message} </span>
+                                :
+                                null
+                        }
+                        {
+                            this.state.viewCurrent ?
+                                <div id="admin-options">
+                                    {
+                                        this.state.flash ?
+                                            <span style={this.state.flash.success ? {color: "#1DB954"} : {color: "red"}} > {this.state.flash.message} </span>
+                                            :
+                                            null
+                                    }
+                                    <br/>
+                                    <button id="delete-user-btn" onClick={this.setConfirmDelete} style={this.state.confirmDelete ? {backgroundColor:"#1DB954"} : null}> {this.state.confirmDelete ? "cancel" : "Delete user"} </button> 
+                                    {
+                                        this.state.confirmDelete ?
+                                            <a style={{color: "red"}} onClick={this.adminDeleteUser}> confirm delete, press here </a> 
+                                            :
+                                            null
+                                    }
+                                    <br/><br/>
+                                    <div>
+                                        <button id="reset-password" onClick={this.adminPasswordReset}> Reset Password </button>
+                                        <input type="text" placeholder="Enter new password for resest" value={this.state.resetPasswordInput} name="resetPasswordInput" onChange={this.handleInput}/>
+                                    </div>
                                 </div>
                                 :
                                 null

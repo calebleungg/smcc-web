@@ -188,8 +188,8 @@ button {
         margin-right: 20px;
     }
     input {
-        padding: 10px 20px;
-        font-size: 1em;
+        padding: 10px;
+        font-size: 0.95em;
         width: 300px;
         // font-weight: 600;
         border: 1px solid lightgrey;
@@ -266,6 +266,29 @@ button {
             #member-right-col {
                 padding: 50px;
                 #request-form {
+                    #admin-options {
+                        #delete-user-btn {
+                            background-color: #a31010;
+                            margin-right: 10px;
+                        }
+                        a {
+                            text-decoration: underline;
+                        }
+                        #reset-password {
+                            background-color: #1DB954;
+                        }
+                        input {
+                            width: 300px;
+                            margin-left: 10px;
+                        }
+                    }
+                    img {
+                        width: 150px;
+                        height: 150px;
+                        border-radius: 100%;
+                        object-fit: cover;
+                        margin-bottom: 20px;
+                    }
                     span {
                         font-size: 0.8em;
                         font-weight: 500;
@@ -291,6 +314,12 @@ button {
                     }
                     #flash {
                         font-size: 0.8em;
+                    }
+                    a {
+                        font-size: 0.9em;
+                        cursor: pointer;
+                        color: #1DB954;
+                        font-weight: 700;
                     }
                 }
             }
@@ -724,6 +753,15 @@ button {
         }
     }
     #request-form {
+        #change-password-btn {
+            color: #1DB954;
+            font-weight: 700;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        #password-div {
+            padding-bottom: 100px;
+        }
         span {
             font-size: 0.8em;
             font-weight: 500;
@@ -738,14 +776,8 @@ button {
         button {
             padding: 10px;
             font-weight: 700;
-            color: white;
-        }
-        #approve-btn {
             background-color: #1DB954;
-            margin-right: 20px;
-        }
-        #decline-btn {
-            background-color: #a31010;
+            color: white;
         }
         #flash {
             font-size: 0.8em;
