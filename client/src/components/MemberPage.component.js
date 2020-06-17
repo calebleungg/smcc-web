@@ -3,6 +3,11 @@ import { Redirect } from 'react-router-dom'
 import schoolLogo from '../assets/images/smcc-logo.jpg'
 import axios from 'axios'
 import avatarDefault from '../assets/images/default-pic.png'
+import JavascriptTimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+import ReactTimeAgo from 'react-time-ago'
+
+JavascriptTimeAgo.addLocale(en)
 
 export default class MemberPage extends Component {
 
@@ -11,12 +16,25 @@ export default class MemberPage extends Component {
         redirect: false,
         user: {},
         memberList: [],
-        postInput: ''
+        posts: [],
+        postInput: '',
+        updatePosts: false,
+        editingInput: ''
     }
 
     componentDidMount() {
        this.getApiProfile()
        this.getApiMemberList()
+       this.getApiPosts()
+    }
+
+    componentDidUpdate() {
+        if(this.state.updatePosts) {
+            this.getApiPosts()
+            this.setState({
+                updatePosts: false
+            })
+        }
     }
 
     getApiProfile = () => {
@@ -40,6 +58,20 @@ export default class MemberPage extends Component {
             })
     }
 
+    getApiPosts = () => {
+        axios.get('/api/posts')
+            .then(response => {
+                let posts = response.data
+                posts.map(post => {
+                    post.isEditing = false
+                })
+                this.setState({
+                    posts: posts
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
     getApiMemberList = () => {
         axios.get('/api/users')
             .then(response => {
@@ -56,6 +88,111 @@ export default class MemberPage extends Component {
         this.setState({
             [name]: value
         })
+    }
+
+    checkIfOwner = (post) => {
+        return post.user.id === this.state.user._id ? true : false
+    }
+
+    deletePost = (post) => {
+        
+        axios.delete(`/api/posts/delete/${post._id}`)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    updatePosts: true
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
+    editPost = (post) => {
+        const status = !this.state.postEditing
+        
+        let postList = this.state.posts
+        for(let item of postList) {
+            if (item._id === post._id) {
+                item.isEditing = true
+                this.setState({
+                    editingInput: item.content
+                })
+            }
+        }
+        this.setState({
+            posts: postList,
+        })
+    }
+
+    finishEdit = (post) => {
+        const req = {
+            content: this.state.editingInput,
+            postData: post
+        }
+
+        axios.put('/api/posts/edit', req)
+            .then(response => {
+                console.log(response)
+        
+                this.setState({
+                    updatePosts: true,
+                    editingInput: ''
+                })
+            })
+            .catch(err => console.log(err))
+
+
+    }
+
+    renderPosts = () => {
+        let output = []
+        this.state.posts.map(post => {
+            output.push(
+                <div className="post-item">
+                    <div className="pi-user-details">
+                        <img src={post.user.avatar ? post.user.avatar : avatarDefault} /> 
+                        <div>
+                            <span className="pi-user-name" > {post.user.name} </span><br/>
+                            <span className="pi-date" > <ReactTimeAgo date={post.created_at} /> </span>
+                        </div>
+                        { 
+                            this.checkIfOwner(post) ?
+                                <div className="user-post-edit">
+                                    {
+                                        post.isEditing ?
+                                            <i class="fas fa-check-circle" style={{color: "#1DB954"}} onClick={() => this.finishEdit(post)} ></i>
+                                            :
+                                            <i class="fas fa-edit" onClick={() => this.editPost(post)} ></i>
+
+                                    }
+                                    <i class="far fa-trash-alt" style={{color: "#a31010"}} onClick={() => this.deletePost(post)}></i>
+                                </div>
+                                :
+                                null
+                        }
+                    </div>
+                    <div className="pi-content">
+                        {
+                            post.isEditing ? 
+                                <input 
+                                    className="post-edit-input" 
+                                    type="text" 
+                                    value={this.state.editingInput} 
+                                    name="editingInput" 
+                                    onChange={this.handleChange} 
+                                    onKeyPress={(event) => {
+                                        if (event.key === "Enter") {
+                                            this.finishEdit(post)
+                                        }
+                                    }}
+                                />
+                                :
+                                <span> {post.content} </span>
+                        }
+                    </div>
+                </div>
+            )
+        })
+        return output
     }
 
     renderMemberList = () => {
@@ -96,9 +233,10 @@ export default class MemberPage extends Component {
         axios.post('/api/posts/create', req)
             .then(response => {
                 console.log(response)
-                
+
                 this.setState({
-                    postInput: ''
+                    postInput: '',
+                    updatePosts: true
                 })
             })
             .catch(err => {
@@ -148,8 +286,8 @@ export default class MemberPage extends Component {
                         /><br/>
                         <button onClick={this.submitPost} > Post </button>
                     </div>
-                    <div>
-                        member posts
+                    <div id="ma-post-display">
+                        {this.renderPosts()}
                     </div>
                 </div>
 
