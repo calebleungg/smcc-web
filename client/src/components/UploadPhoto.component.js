@@ -82,7 +82,7 @@ export default class UploadPhoto extends Component {
                 <input id="file-select-input" name="photo" type="file" onChange={this.onFileChange} /> <br/>
                 <textarea name="comment" id="photo-comment-input" placeholder="Enter a comment" value={this.state.comment} onChange={this.handleInput} /><br/>
                 <button onClick={this.onUpload} > upload </button><br/>
-                <span> {this.state.isUploading ? <img id="loading-gif" src={loadingGif} /> : null} </span>
+                <span> {this.state.isUploading ? <img className="loading-gif" src={loadingGif} /> : null} </span>
                 <span style={{color: "red"}}> {this.state.error ? this.state.error : null} </span>
                 <span style={{color: "#1DB954"}}> {this.state.success ? this.state.success : null} </span>
             </div>

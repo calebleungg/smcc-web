@@ -77,4 +77,40 @@ const editPost = (req, res) => {
         })
 }
 
-module.exports = { getPosts, makePost, deletePost, editPost }
+const makeComment = (req, res) => {
+
+    const date = Date.now()
+    const { user, comment, postData } = req.body
+    let newComment = {
+        user: user,
+        comment: comment,
+        created_at: date
+    }
+
+    Post.findByIdAndUpdate(postData._id, { $push: {"comments": newComment } }, {new: true} )
+        .then(response => {
+            console.log(response)
+            res.send('comment added')
+        })
+        .catch(err => {
+            console.log(err)
+            res.send(err)
+        })
+}
+
+const deleteComment = (req, res) => {
+
+    Post.updateOne(
+        { "comments._id": req.params.id },
+        { $pull: { "comments" : {"_id": req.params.id} } }
+    ).then(response => {
+        console.log(response)
+        res.send(response)
+    })
+    .catch(err => {
+        console.log(err)
+        res.send(err)
+    })
+}
+
+module.exports = { getPosts, makePost, deletePost, editPost, makeComment, deleteComment }

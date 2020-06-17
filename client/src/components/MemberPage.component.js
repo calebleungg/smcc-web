@@ -19,7 +19,8 @@ export default class MemberPage extends Component {
         posts: [],
         postInput: '',
         updatePosts: false,
-        editingInput: ''
+        editingInput: '',
+        commentInput: ''
     }
 
     componentDidMount() {
@@ -143,11 +144,88 @@ export default class MemberPage extends Component {
 
     }
 
+    addComment = (post) => {
+        const req = {
+            user: {
+                id: this.state.user._id,
+                name: `${this.state.user.firstName} ${this.state.user.lastName}`,
+                avatar: this.state.user.avatar && this.state.user.avatar.url ? this.state.user.avatar.url : null
+            },
+            comment: this.state.commentInput,
+            postData: post
+        }
+
+        axios.put('/api/posts/comment', req)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    updatePosts: true,
+                    commentInput: ''
+                })
+            })
+            .catch(err => {
+                this.setState({
+                    updatePosts: true,
+                    commentInput: ''
+                })
+            })
+    }
+
+    deleteComment = (comment) => {
+        axios.delete(`/api/posts/comment/delete/${comment._id}`)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    updatePosts: true
+                })
+            })
+            .catch(err => console.log(err))
+    }
+
+    renderComments = (post) => {
+        let output = []
+
+        let comments = post.comments
+        console.log(comments)
+
+        comments.sort(function(a, b) {
+            let dateA = a.created_at; // ignore upper and lowercase
+            let dateB = b.created_at.toUpperCase(); // ignore upper and lowercase
+            if (dateA > dateB) {
+              return -1;
+            }
+            if (dateA < dateB) {
+              return 1;
+            }
+            // names must be equal
+            return 0;
+        })
+
+        comments.map(comment => {
+            output.push(
+                <div className="comment-item">
+                    <div className="ci-top">
+                        <img src={comment.user.avatar ? comment.user.avatar : avatarDefault} />
+                        <span> {comment.comment} </span>
+                        {
+                            this.checkIfOwner(comment) ?
+                                <i class="far fa-trash-alt" style={{color: "#a31010"}} onClick={() => this.deleteComment(comment)} ></i>
+                                :
+                                null
+                        }
+                    </div>
+                    <span className="comment-time"> <ReactTimeAgo date={comment.created_at} /> </span>
+                </div>
+            )
+        })
+        return output
+    }
+
     renderPosts = () => {
         let output = []
         this.state.posts.map(post => {
             output.push(
-                <div className="post-item">
+                <div className="post-item" >
                     <div className="pi-user-details">
                         <img src={post.user.avatar ? post.user.avatar : avatarDefault} /> 
                         <div>
@@ -176,7 +254,6 @@ export default class MemberPage extends Component {
                                 <input 
                                     className="post-edit-input" 
                                     type="text" 
-                                    value={this.state.editingInput} 
                                     name="editingInput" 
                                     onChange={this.handleChange} 
                                     onKeyPress={(event) => {
@@ -188,6 +265,29 @@ export default class MemberPage extends Component {
                                 :
                                 <span> {post.content} </span>
                         }
+                    </div>
+                    {
+                        post.comments.length > 0 ? 
+                            <div className="pi-comment-list">
+                                {this.renderComments(post)}
+                            </div>
+                            :
+                            null
+                    }
+                    <div className="pi-comments">
+                        <img src={post.user.avatar ? post.user.avatar : avatarDefault} /> 
+                        <input 
+                            type="text" 
+                            placeholder="Write a comment" 
+                            name="commentInput" 
+                            onChange={this.handleChange} 
+                            onKeyPress={(event) => {
+                                if(event.key === "Enter") {
+                                    this.addComment(post)
+                                    event.target.value = ''
+                                }
+                            }}
+                        />
                     </div>
                 </div>
             )

@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Post = require('../models/Post');
 const cloudinary = require('cloudinary').v2
 
 const getUsers = (req, res) => {
@@ -94,14 +95,42 @@ const changePassword = (req, res) => {
 }
 
 const deleteUser = (req, res) => {
-    User.findByIdAndDelete(req.params.id)
-        .then(response => {
-            console.log(response)
-            res.send(response)
-        })
-        .catch(err => {
-            console.log(err)
-            res.send(err)
+
+    User.findById(req.params.id)
+        .then(user => {
+            if (user.avatar && user.avatar.publicId) {
+                cloudinary.api.delete_resources([user.avatar.publicId],
+                    (error, result) => {
+                        console.log('deleting avatar from cloud')
+                        if (error) {
+                            console.log(error)
+                        }
+                        console.log(result)
+                    });
+            }
+
+            Post.find({"user.id": user._id})
+                .then(posts => {
+                    posts.map(post => {
+                        post.delete()
+                            .then(response => {
+                                console.log(response)
+                            })
+                            .catch(err => console.log(err))
+                    })
+                })
+                .catch(err => console.log(err))
+
+            
+            user.delete()
+                .then(response => {
+                    console.log(response)
+                    res.send(response)
+                })
+                .catch(err => {
+                    console.log(err)
+                    res.send(err)
+                })
         })
 }
 

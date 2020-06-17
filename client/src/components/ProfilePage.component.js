@@ -111,6 +111,7 @@ export default class ProfilePage extends Component {
                                 message: "profile uploaded successfully"
                             }
                         })
+                        window.location.reload(false)
                     })
                     .catch(err => {
                         console.log(err)
