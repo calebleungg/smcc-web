@@ -59,7 +59,7 @@ export default class Navbar extends Component {
                     }
                     {
                         this.state.isLoggedIn ?
-                            <Link to="/"> <button> Members Area </button> </Link>
+                            <Link to="/member"> <button> Members Area </button> </Link>
                             :
                             null
                     }

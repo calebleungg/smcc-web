@@ -4,7 +4,7 @@ const router = express.Router();
 const { getUsers, updateAvatar, updateDetails, changePassword, deleteUser, resetPassword } = require('../controllers/user_controller')
 const { isAdmin, userAuthenticated } = require('../utils/common_utilities')
 
-router.get('/', getUsers)
+router.get('/', userAuthenticated, getUsers)
 
 router.put('/update/avatar/:id', userAuthenticated, updateAvatar)
 router.put('/update/details/:id', userAuthenticated, updateDetails)

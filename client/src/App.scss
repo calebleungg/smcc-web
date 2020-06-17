@@ -229,6 +229,15 @@ button {
         height: 92vh;
         width: 250px;
         text-align: center;
+        #admin-name {
+            font-weight: 700;
+        }
+        img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 100%;
+        }
         p {
             font-weight: 700;
         }
@@ -782,5 +791,74 @@ button {
         #flash {
             font-size: 0.8em;
         }
+    }
+}
+
+
+// ----------------------------------------------------------------------
+// ------------------ PROFILE PAGE --------------------------------------
+// ----------------------------------------------------------------------
+
+
+#member-container {
+    padding-top: 15vh;
+    height: 85vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    .ma-sub-title {
+        font-weight: 600;
+    }
+    .ma-col {
+        margin: 0 2vw;
+    }
+
+    #ma-member-list {
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 50px 10px 10px;
+        #ma-member-card {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin: 5px 0;
+            img {
+                width: 70px;
+                height: 70px;
+                object-fit: cover;
+                border-radius: 100%;
+                margin-right: 10px;
+            }
+            #ma-member-name {
+                font-weight: 500;
+            }
+            #ma-member-country {
+                font-size: 0.8em;
+            }
+        }
+    }
+    #ma-post-input {
+
+        textarea {
+            font-family: 'Montserrat', 'sans-serif';
+            padding: 10px;
+            font-size: 0.9em;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            width: 30vw;
+            height: 100px;
+        }
+
+        button {
+            background-color: $main-color;
+            font-weight: 700;
+            padding: 10px 15px;
+            color: white;
+            border-radius: 5px
+        }
+
     }
 }

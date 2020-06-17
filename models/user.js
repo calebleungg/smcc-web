@@ -37,6 +37,9 @@ const User = new Schema({
     avatar: {
         url: String,
         publicId: String
+    },
+    created_at: {
+        type: Date
     }
 });
 

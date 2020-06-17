@@ -6,8 +6,8 @@ import avatarDefault from '../../assets/images/default-pic.png'
 export default class DashboardMembers extends Component {
 
     state = {
-        viewPending: true,
-        viewCurrent: false,
+        viewPending: false,
+        viewCurrent: true,
         pending: [],
         userList: [],
         userViewing: null,
@@ -374,6 +374,7 @@ export default class DashboardMembers extends Component {
             <div id='dash-members-container'>
                 <div id="member-left-col">
                     <div id="select-options">
+                        <button className="col-title" style={focusBtn(this.state.viewCurrent)} name="viewCurrent" onClick={this.handleSelect}> Current ({this.state.userList.length})</button>
                         <button className="col-title" style={focusBtn(this.state.viewPending)} name="viewPending" onClick={this.handleSelect}> 
                             Pending  
                             {
@@ -383,7 +384,6 @@ export default class DashboardMembers extends Component {
                                     null
                             }
                         </button>
-                        <button className="col-title" style={focusBtn(this.state.viewCurrent)} name="viewCurrent" onClick={this.handleSelect}> Current ({this.state.userList.length})</button>
                     </div>
 
                     <div id="display-list"> 

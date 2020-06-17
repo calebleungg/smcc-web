@@ -5,16 +5,18 @@ import DashboardContent from './dashboard/DashboardContent.component'
 import DashboardMembers from './dashboard/DashboardMembers.component'
 import DashboardAlbums from './dashboard/DashboardAlbums.component'
 import DashboardEvents from './dashboard/DashboardEvents.component'
+import avatarDefault from '../assets/images/default-pic.png'
 
 export default class AdminDashboard extends Component {
 
     state = {
         isVerifying: true,
         isAuthenticated: false,
-        viewContent: false,
-        viewMembers: true,
+        viewContent: true,
+        viewMembers: false,
         viewAlbums: false,
         viewEvents: false,
+        admin: {}
     }
 
     componentDidMount() {
@@ -23,6 +25,7 @@ export default class AdminDashboard extends Component {
                 const user = response.data.user
                 if (response.status === 200 && user.role === 'admin') {
                     this.setState({
+                        admin: user,
                         isAuthenticated: true
                     })
                 } 
@@ -57,7 +60,7 @@ export default class AdminDashboard extends Component {
             if (btn) {
                 return {
                     backgroundColor: "#f0f0f0",
-                    fontWeight: "800"
+                    fontWeight: "600"
                 }
             }
         }
@@ -74,6 +77,18 @@ export default class AdminDashboard extends Component {
                     <div id="admin-container">
                         <div id="admin-side-panel">
                             <p> Admin dashboard</p>
+                            <div>
+                                {
+                                    this.state.admin.avatar && this.state.admin.avatar.url ?
+                                        <img src={this.state.admin.avatar.url} />
+                                        :
+                                        <img src={avatarDefault} />
+                                    
+                                }
+                                <br/>
+                                <br/>
+                                <span id="admin-name"> {this.state.admin.firstName} {this.state.admin.lastName} </span>
+                            </div>
                             <div id="panel-options">
                                 <button style={selectedBtn(this.state.viewContent)} name="viewContent" onClick={this.handleClick} > Page Content </button>
                                 <button style={selectedBtn(this.state.viewMembers)} name="viewMembers" onClick={this.handleClick}> Members </button>

@@ -16,6 +16,8 @@ const pageContentRouter = require('./routes/page_content_routes')
 const albumRouter = require('./routes/album_routes')
 const requestRouter = require('./routes/request_routes')
 const userRouter = require('./routes/user_routes')
+const postRouter = require('./routes/post_routes');
+const { post } = require('./routes/post_routes');
 
 
 // initiating server
@@ -79,6 +81,7 @@ app.use('/api/content', pageContentRouter);
 app.use('/api/albums', albumRouter);
 app.use('/api/requests', requestRouter)
 app.use('/api/users', userRouter)
+app.use('/api/posts', postRouter)
 
 
 // Deployment redirect to static assets
