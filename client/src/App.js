@@ -8,6 +8,7 @@ import AdminDashboard from './components/AdminDashboard.component'
 import RequestPage from './components/RequestPage.component'
 import ProfilePage from './components/ProfilePage.component'
 import MemberPage from './components/MemberPage.component'
+import AlbumPage from './components/AlbumPage.component'
 
 import './App.scss'
 
@@ -22,6 +23,7 @@ function App() {
 			<Route path="/request" exact component={RequestPage} />
 			<Route path="/profile" exact component={ProfilePage} />
 			<Route path="/member" exact component={MemberPage} />
+			<Route path="/album/:id" exact component={AlbumPage} />
 		</Router>
 	);
 }

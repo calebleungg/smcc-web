@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import schoolLogo from '../assets/images/smcc-logo.jpg'
 import axios from 'axios'
 import avatarDefault from '../assets/images/default-pic.png'
@@ -17,16 +17,22 @@ export default class MemberPage extends Component {
         user: {},
         memberList: [],
         posts: [],
+        albums: [],
+        events: [],
         postInput: '',
         updatePosts: false,
         editingInput: '',
-        commentInput: ''
+        commentInput: '',
+        isAnnouncement: false,
+        photoToAttach: null,
     }
 
     componentDidMount() {
-       this.getApiProfile()
-       this.getApiMemberList()
-       this.getApiPosts()
+        this.getApiProfile()
+        this.getApiMemberList()
+        this.getApiPosts()
+        this.getApiAlbums()
+        this.getApiEvents()
     }
 
     componentDidUpdate() {
@@ -82,6 +88,88 @@ export default class MemberPage extends Component {
                 })
             })
             .catch(err => console.log(err))
+    }
+
+    getApiAlbums = () => {
+        axios.get('/api/albums')
+            .then(response => {
+                this.setState({
+                    albums: response.data
+                })
+            })
+    }
+
+    getApiEvents = () => {
+        axios.get('/api/events')
+            .then(response => {
+                this.setState({
+                    events: response.data
+                })
+            })
+    }
+
+    renderEvents = () => {
+        let output = []
+        this.state.events.map(event => {
+            const months = {
+                "01": "JAN",
+                "02": "FEB",
+                "03": "MAR",
+                "04": "APR",
+                "05": "MAY",
+                "06": "JUN",
+                "07": "JUL",
+                "08": "AUG",
+                "09": "SEP",
+                "10": "OCT",
+                "11": "NOV",
+                "12": "DEC",
+            }
+           
+            output.push(
+            
+                <div className="event-item">
+                    <div className="ei-top">
+                        <div className="ei-date">
+                            <span className="ei-month"> {months[event.date.slice(0,10).split('-')[1]]} </span><br/>
+                            <span className="ei-day"> {event.date.slice(0,10).split('-')[2]} </span>
+                        </div>
+                        <div className="ei-details">
+                            <span className="ei-name"> {event.name} </span><br/>
+                            <span className="ei-time"> {event.time} </span>
+                        </div>
+                    </div>
+                    <span className="ei-desc"> {event.description} </span>
+                </div>
+                    
+            )
+        })
+       
+        return output
+    }
+
+    renderAlbums = () => {
+        let output = []
+        this.state.albums.map(album => {
+            output.push(
+                <Link to={`/album/${album._id}`}>
+                    <div className="ma-album-item">
+                        <span className="ma-album-name"> {album.name.length > 16 ? album.name.slice(0, 16) + "..." : album.name} </span> <br/>
+                        {
+                            album.photos.length > 0 ?
+                                <img src={album.photos[0].url} />
+                                :
+                                <img src={schoolLogo} />
+                        }
+                    </div>
+                </Link>
+            )
+        })
+        return (
+            <div id="ma-album-box">
+                {output}
+            </div>
+        )
     }
 
     handleChange = (event) => {
@@ -206,7 +294,7 @@ export default class MemberPage extends Component {
                 <div className="comment-item">
                     <div className="ci-top">
                         <img src={comment.user.avatar ? comment.user.avatar : avatarDefault} />
-                        <span> {comment.comment} </span>
+                        <span className="comment-content"> <strong>{comment.user.name}</strong> {comment.comment} </span>
                         {
                             this.checkIfOwner(comment) ?
                                 <i class="far fa-trash-alt" style={{color: "#a31010"}} onClick={() => this.deleteComment(comment)} ></i>
@@ -255,6 +343,7 @@ export default class MemberPage extends Component {
                                     className="post-edit-input" 
                                     type="text" 
                                     name="editingInput" 
+                                    value={this.state.editingInput}
                                     onChange={this.handleChange} 
                                     onKeyPress={(event) => {
                                         if (event.key === "Enter") {
@@ -267,6 +356,15 @@ export default class MemberPage extends Component {
                         }
                     </div>
                     {
+                        post.media ?
+                        
+                            <img src={post.media.url} />
+                        
+                            :
+                            null
+                    }
+                    
+                    {
                         post.comments.length > 0 ? 
                             <div className="pi-comment-list">
                                 {this.renderComments(post)}
@@ -275,10 +373,10 @@ export default class MemberPage extends Component {
                             null
                     }
                     <div className="pi-comments">
-                        <img src={post.user.avatar ? post.user.avatar : avatarDefault} /> 
+                        <img src={this.state.user.avatar && this.state.user.avatar.url ? this.state.user.avatar.url : avatarDefault} /> 
                         <input 
                             type="text" 
-                            placeholder="Write a comment" 
+                            placeholder="Write a comment..." 
                             name="commentInput" 
                             onChange={this.handleChange} 
                             onKeyPress={(event) => {
@@ -324,25 +422,67 @@ export default class MemberPage extends Component {
             avatar: this.state.user.avatar && this.state.user.avatar.url ? this.state.user.avatar.url : null
         }
         const content = this.state.postInput        
-        const req = {
+        let req = {
             user: user,
             content: content
         }
-        console.log(req)
 
-        axios.post('/api/posts/create', req)
-            .then(response => {
-                console.log(response)
+        if (this.state.photoToAttach) {
+            const file = this.state.photoToAttach
+    
+            const formData = new FormData()
+            formData.append('upload_preset', 'trt9vcvh')
+            formData.append('file', file)
+    
+            axios.post('https://api.cloudinary.com/v1_1/dpbekfxvh/image/upload', formData)
+                .then(response => {
 
-                this.setState({
-                    postInput: '',
-                    updatePosts: true
+                    req.media = {
+                        url: response.data.secure_url,
+                        publicId: response.data.public_id
+                    }
+                    console.log(req)
+            
+                    axios.post('/api/posts/create', req)
+                        .then(response => {
+                            console.log(response)
+            
+                            this.setState({
+                                postInput: '',
+                                updatePosts: true
+                            })
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
                 })
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                .catch(err => console.log(err))
+        } else {
+            axios.post('/api/posts/create', req)
+                .then(response => {
+                    console.log(response)
+    
+                    this.setState({
+                        postInput: '',
+                        updatePosts: true
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        }
 
+    }
+
+    handleAnnouncement = () => {
+        const status = this.state.isAnnouncement
+        this.setState({
+            isAnnouncement: !status
+        })
+    }
+
+    triggerUpload = () => {
+        document.getElementById('post-image-input').click()
     }
 
 
@@ -361,30 +501,46 @@ export default class MemberPage extends Component {
             )
         }
 
+        const upload = () => {
+            document.getElementById("selectImage").click()
+        }
+
         return (
             <div id="member-container">
+               
                 <div className="ma-col" id="member-left-col">
-                    <div id="ma-member-list">
-                        <span className="ma-sub-title"> Member List  </span>
-                        {this.renderMemberList()}
+                    <div >
+                    <span className="ma-sub-title"> Member List  </span>
+                        <div id="ma-member-list">
+                            {this.renderMemberList()}
+                        </div>
                     </div>
                 </div>
 
                 <div  className="ma-col" id="member-middle-col">
-                    <div id="ma-post-input">
+                    <div id="ma-post-input" style={{paddingTop: "30px"}}>
                         <textarea 
                             type="text" 
                             placeholder="Type your post here..." 
                             name="postInput" 
                             value={this.state.postInput} 
                             onChange={this.handleChange} 
-                            onKeyPress={(event) => {
-                                if(event.key === "Enter") {
-                                    this.submitPost()
-                                }
-                            }}
                         /><br/>
-                        <button onClick={this.submitPost} > Post </button>
+                        <div>
+                            <button onClick={this.submitPost} > Post </button> 
+                            <i class="fas fa-image" onClick={this.triggerUpload}></i> 
+                            {
+                                this.state.photoToAttach ?
+                                    <div>
+                                        <span> {this.state.photoToAttach.name} </span> <i id="remove-attach" class="fas fa-times-circle" onClick={() => this.setState({photoToAttach: null})} ></i>
+                                    </div>
+                                    :
+                                    null
+                            }
+                            <input type="file" id="post-image-input" onChange={(event) => {
+                                this.setState({photoToAttach: event.target.files[0]})}
+                            } style={{display: "none"}} />
+                        </div>
                     </div>
                     <div id="ma-post-display">
                         {this.renderPosts()}
@@ -392,11 +548,13 @@ export default class MemberPage extends Component {
                 </div>
 
                 <div  className="ma-col" id="member-right-col">
-                    <div>
-                        album display
-                    </div>
-                    <div>
-                        events display
+                    <span className="ma-sub-title"> Albums </span>
+                    <div id="ma-album-list">
+                        {this.renderAlbums()}
+                    </div><br/><br/>
+                    <span className="ma-sub-title"> Events </span>
+                    <div id="ma-event-list">
+                        {this.renderEvents()}
                     </div>
                 </div>
             </div>

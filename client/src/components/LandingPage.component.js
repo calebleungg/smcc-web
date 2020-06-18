@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import bannerPhoto from '../assets/images/banner-photo.jpg'
 import landingOne from '../assets/images/front-photo-1.jpg'
 import landingTwo from '../assets/images/front-photo-2.jpg'
@@ -77,7 +78,7 @@ export default class LandingPage extends Component {
                     <div className="landing-album-item">
                         <button onClick={(event) => {this.handleNavigate('back', album._id)}} > <i class="fas fa-angle-left"></i> </button>
                         <div>
-                            <img src={album.photos[this.getAlbumCounter(album._id)].url} alt="album display" /> 
+                            <Link to={`/album/${album._id}`} > <img src={album.photos[this.getAlbumCounter(album._id)].url} alt="album display" /> </Link> 
                             <p> {album.name} </p>
                         </div>
                         <button  onClick={(event) => {this.handleNavigate('next', album._id)}} > <i class="fas fa-angle-right"></i> </button>
@@ -86,10 +87,12 @@ export default class LandingPage extends Component {
             } else {
                 output.push(
                     <div className="landing-album-item">
+                        <button > <i class="fas fa-angle-left"></i> </button>
                         <div>
-                            <img src={logo} alt="album display" /> 
+                            <Link to={`/album/${album._id}`}> <img src={logo} alt="album display" /> </Link> 
                             <p> {album.name} </p>
                         </div>
+                        <button > <i class="fas fa-angle-right"></i> </button>
                     </div>
                 )
             }

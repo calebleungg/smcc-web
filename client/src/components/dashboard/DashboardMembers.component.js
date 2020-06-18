@@ -212,21 +212,39 @@ export default class DashboardMembers extends Component {
         })
     }
 
+    updateDetails = () => {
+        // console.log(this.state.userViewing)
+        axios.put(`/api/users/update/details/${this.state.userViewing._id}`, this.state.userViewing)
+            .then(response => {
+                console.log(response)
+                this.setState({
+                    allowEdit: false,
+                    flash: {
+                        success: true,
+                        message: "Details successfully updated"
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err)
+                this.setState({
+                    flash: {
+                        success: false,
+                        message: "There was an error saving the updated information."
+                    }
+                })
+            })
+    }
+
     renderUserDetails = () => {
         const list = this.state.viewPending ? this.state.pending : this.state.userList
         for (let user of list) {
             if (user === this.state.userViewing) {
                 return (
                     <div id="request-form">
-                        {
-                            this.state.viewPending ? 
-                                <div>
-                                <a onClick={this.handleEdit} > {!this.state.allowEdit ? "Allow Editing" : "Disable Editing" } </a><br/><br/>
-                                </div>
-                                :
-                                null
-                        }
-
+                     
+                        <a onClick={this.handleEdit} > {!this.state.allowEdit ? "Allow Editing" : "Disable Editing" } </a><br/><br/>
+                    
                         {
                             this.state.viewCurrent ?
                                 user.avatar && user.avatar.url ?
@@ -241,7 +259,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="firstName"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             value={this.state.userViewing.firstName}
                             onChange={this.handleChange}                     
                         /><br/>
@@ -249,7 +267,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="lastName"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.lastName}                        
                         /><br/>
@@ -257,7 +275,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="email"
                             name="email"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled="true"
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.email}
                         /><br/>
@@ -265,7 +283,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="phone"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.phone}
                         /><br/>
@@ -273,7 +291,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="yearGraduated"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.yearGraduated}
                         /><br/>
@@ -281,7 +299,7 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="country"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.country}
                         /><br/>
@@ -289,10 +307,16 @@ export default class DashboardMembers extends Component {
                         <input 
                             type="text"
                             name="address"
-                            disabled={this.state.viewPending && this.state.allowEdit ? false : true}
+                            disabled={this.state.allowEdit ? false : true}
                             onChange={this.handleChange}                     
                             value={this.state.userViewing.address}
                         /><br/>
+                        {
+                            this.state.viewCurrent && this.state.allowEdit ?
+                                <button id="approve-btn" onClick={this.updateDetails} > Save details </button>
+                                :
+                                null
+                        }
                         { 
                             this.state.viewPending ? 
                                 <span> Preferred password </span>
@@ -321,12 +345,6 @@ export default class DashboardMembers extends Component {
                                 null
                         }
                         {
-                            this.state.flash ?
-                                <span style={ this.state.flash.success ? {color: "#1DB954"} : {color: "red"} } > {this.state.flash.message} </span>
-                                :
-                                null
-                        }
-                        {
                             this.state.viewCurrent ?
                                 <div id="admin-options">
                                     {
@@ -345,7 +363,7 @@ export default class DashboardMembers extends Component {
                                     }
                                     <br/><br/>
                                     <div>
-                                        <button id="reset-password" onClick={this.adminPasswordReset}> Reset Password </button>
+                                        <button id="reset-password" onClick={this.adminPasswordReset}> Reset password </button>
                                         <input type="text" placeholder="Enter new password for resest" value={this.state.resetPasswordInput} name="resetPasswordInput" onChange={this.handleInput}/>
                                     </div>
                                 </div>

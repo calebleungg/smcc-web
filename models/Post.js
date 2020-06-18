@@ -23,7 +23,12 @@ const Post = new Schema ({
     ],
     created_at: {
         type: Date
+    },
+    media: {
+        url: String,
+        publicId: String
     }
+    
 })
 
 

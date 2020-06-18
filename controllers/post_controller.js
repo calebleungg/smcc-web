@@ -1,4 +1,5 @@
 const Post = require('../models/Post')
+const cloudinary = require('cloudinary').v2
 
 const getPosts = (req, res) => {
     Post.find().sort( { created_at: -1 } )
@@ -14,9 +15,9 @@ const getPosts = (req, res) => {
 
 const makePost = (req, res) => {
     const created_at = Date.now()
-    const { content, user } = req.body
+    const { content, user, media } = req.body
 
-    const newPost = new Post({content, user, created_at})
+    const newPost = new Post({content, user, created_at, media})
     newPost.save()
         .then(response => {
             console.log(response)
@@ -36,6 +37,18 @@ const deletePost = (req, res) => {
     Post.findById(req.params.id)
         .then(post => {
             if (String(post.user.id) === String(req.user._id)) {
+
+                if (post.media) {
+                    cloudinary.api.delete_resources([post.media.publicId],
+                        (error, result) => {
+                            console.log('deleting from cloud')
+                            if (error) {
+                                console.log(error)
+                            }
+                            console.log(result)
+                    });
+                }
+
                 post.delete()
                     .then(response => {
                         console.log(response)

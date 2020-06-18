@@ -17,8 +17,7 @@ const albumRouter = require('./routes/album_routes')
 const requestRouter = require('./routes/request_routes')
 const userRouter = require('./routes/user_routes')
 const postRouter = require('./routes/post_routes');
-const { post } = require('./routes/post_routes');
-
+const eventRouter = require('./routes/event_router')
 
 // initiating server
 const port = process.env.PORT || 3005;
@@ -82,6 +81,7 @@ app.use('/api/albums', albumRouter);
 app.use('/api/requests', requestRouter)
 app.use('/api/users', userRouter)
 app.use('/api/posts', postRouter)
+app.use('/api/events', eventRouter)
 
 
 // Deployment redirect to static assets

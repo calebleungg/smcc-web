@@ -112,6 +112,18 @@ const deleteUser = (req, res) => {
             Post.find({"user.id": user._id})
                 .then(posts => {
                     posts.map(post => {
+
+                        if (post.media) {
+                            cloudinary.api.delete_resources([post.media.publicId],
+                                (error, result) => {
+                                    console.log('deleting from cloud')
+                                    if (error) {
+                                        console.log(error)
+                                    }
+                                    console.log(result)
+                            });
+                        }
+                        
                         post.delete()
                             .then(response => {
                                 console.log(response)

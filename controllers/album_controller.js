@@ -69,33 +69,45 @@ const deletePhotoById = (req, res) => {
 const deleteAlbumById = (req, res) => {
     Album.findById(req.params.id)
         .then(album => {
-            let toDelete = []
 
-            album.photos.map(photo => {
-                toDelete.push(photo.publicId)
-            })
-
-            cloudinary.api.delete_resources(toDelete,
-                (error, result) => {
-                    if (error) {
-                        console.log(error)
-                        return res.send(err)
-                    }
-                    res.send(result)
-                    
-                    Album.findByIdAndDelete(req.params.id)
-                        .then(response => {
-                            console.log(response)
-                            res.send('successfully deleted')
-                        })
-                        .catch(err => {
-                            console.log(err)
-                            res.send(err)
-                        })
-
-            });
+            if (album.photos.length > 0 ) {
+                let toDelete = []
+    
+                album.photos.map(photo => {
+                    toDelete.push(photo.publicId)
+                })
+    
+                cloudinary.api.delete_resources(toDelete,
+                    (error, result) => {
+                        if (error) {
+                            console.log(error)
+                            return res.send(error)
+                        }
+                        res.send(result)
+                        
+                        Album.findByIdAndDelete(req.params.id)
+                            .then(response => {
+                                console.log(response)
+                                res.send('successfully deleted')
+                            })
+                            .catch(err => {
+                                console.log(err)
+                                res.send(err)
+                            })
+    
+                });
+            } else {
+                Album.findByIdAndDelete(req.params.id)
+                    .then(response => {
+                        console.log(response)
+                        res.send('successfully deleted')
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        res.send(err)
+                    })
+            }
         })
-
 }
 
 const uploadPhoto = (req, res) => {
