@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import schoolLogo from '../assets/images/smcc-logo.jpg'
 import axios from 'axios'
-import Modal from 'react-modal';
-
+import ImageGallery from 'react-image-gallery';
 export default class AlbumPage extends Component {
 
     state = {
-        album: null,
+        album: [],
+        photos: [],
         showPhoto: false,
         photoViewing: '',
         photoDesc: '',
@@ -16,7 +16,15 @@ export default class AlbumPage extends Component {
     componentDidMount() {
         axios.get(`/api/albums/single/${this.props.match.params.id}`)
             .then(response => {
+                let photos = []
+                response.data.photos.map(photo => {
+                    photos.push({
+                        original: photo.url,
+                        thumbnail: photo.url
+                    })
+                })
                 this.setState({
+                    photos: photos,
                     album: response.data
                 })
             })
@@ -39,15 +47,15 @@ export default class AlbumPage extends Component {
         })
     }
 
-    renderPhotos = () => {
-        let output = []
-        this.state.album.photos.map(photo => {
-            output.push(
-                <img src={photo.url} onClick={() => this.showPhoto(photo)} />
-            )
-        })
-        return output
-    }
+    // renderPhotos = () => {
+    //     let output = []
+    //     this.state.album.photos.map(photo => {
+    //         output.push(
+    //             <img src={photo.url} onClick={() => this.showPhoto(photo)} />
+    //         )
+    //     })
+    //     return output
+    // }
 
     render(){
 
@@ -74,7 +82,7 @@ export default class AlbumPage extends Component {
                     <h2> {this.state.album.name} </h2><br/>
                     <p> {this.state.album.description} </p>
                     <div id="ap-display">
-                        {this.renderPhotos()}
+                        <ImageGallery thumbnailPosition={"left"} items={this.state.photos} />
                     </div>
                 </div>
             )
